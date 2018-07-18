@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
+    "keycode": "^2.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   }

@@ -1,5 +1,5 @@
 import React from "react";
 
-const Main = () => <div>This is Main scene</div>;
+const Main = ({ playerName }) => <p> Hello { playerName }<span className="blinker">█</span></p>;
 
 export default Main;
