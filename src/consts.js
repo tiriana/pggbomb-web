@@ -1,4 +1,3 @@
-
 export const SCENES = {
   MENU: "MENU",
   MAIN: "MAIN",

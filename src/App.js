@@ -1,6 +1,6 @@
 import React from "react";
-import Game from "./Game";
-import CRT from "./CRT";
+import Game from "./components/Game";
+import CRT from "./components/CRT";
 
 const App = () => (
   <CRT>

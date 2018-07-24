@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SCENES } from "./consts";
-import Menu from "./scene/Menu";
-import Main from "./scene/Main";
+import { SCENES } from "../consts";
+import Menu from "./scenes/Menu";
+import Main from "./scenes/Main";
 
 class Game extends React.Component {
   constructor() {

@@ -1,5 +1,6 @@
 import React from "react";
-const keycode = require('keycode');
+const keycode = require("keycode");
+import Cursor from "../Cursor";
 
 class NameInput extends React.Component {
   constructor(...args) {
@@ -10,14 +11,14 @@ class NameInput extends React.Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.onKeyPressed.bind(this));
+    document.addEventListener("keydown", this.onKeyPressed);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.onKeyPressed.bind(this));
+    document.removeEventListener("keydown", this.onKeyPressed);
   }
 
-  onKeyPressed(e) {
+  onKeyPressed = (e) => {
     if (keycode("Enter") === e.keyCode && this.state.name.length > 3) {
       this.props.onEnter(this.state.name);
     }
@@ -26,10 +27,14 @@ class NameInput extends React.Component {
         name: state.name.slice(0, -1)
       }));
     }
-    const char = keycode(e.keyCode);
-    if (/[a-z]/.test(char) && char.length === 1) {
+    console.log(keycode(e.keyCode));
+    let char = keycode(e.keyCode);
+    if (keycode(e.keyCode) === "space") {
+      char = " ";
+    }
+    if (/[ 0-9a-z]/.test(char) && char.length === 1) {
       return this.setState(state => ({
-        name: state.name + char.toUpperCase()
+        name: (state.name + char.toUpperCase()).slice(0, 20)
       }));
     }
   }
@@ -37,21 +42,11 @@ class NameInput extends React.Component {
   render() {
     return (
       <span onKeyDown={event => this.onKeyDown(event)}>
-        {this.state.name}<span className="blinker">█</span>
+        { this.state.name }
+        <Cursor />
       </span>
     );
   }
 }
 
-const Menu = ({ onNameEntered }) => (
-  <React.Fragment>
-        <h1>PGG BOMB</h1>
-        <p>Welcome Traveler. I wanna play a game.</p>
-
-        <p>
-          Enter your name: <NameInput onEnter={onNameEntered} />
-        </p>
-  </React.Fragment>
-);
-
-export default Menu;
+export default NameInput;

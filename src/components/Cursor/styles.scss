@@ -1,0 +1,10 @@
+.blinker {
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1,0,0,1);
+  animation-duration: 1s;
+}
+
+@keyframes blinker {
+  from { opacity: 1.0; } to { opacity: 0.0; }
+}
