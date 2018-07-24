@@ -36,21 +36,23 @@ const leaderboard = {
   }
 };
 
+const questionsLeftInSession = {};
+
 export const createSession = ({ playerName }) =>
   new Promise(resolve => {
     setTimeout(() => {
       ++numOfSessions;
+      questionsLeftInSession[numOfSessions] = [...questionsMock].sort(
+        Math.random
+      );
       resolve({ sessionId: numOfSessions });
     }, 1000);
   });
-let lastQuestionId = 0;
 
 export const getNextQuestion = ({ sessionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
-      resolve(
-        questionsMock[(sessionId + lastQuestionId++) % questionsMock.length]
-      );
+      resolve(questionsLeftInSession[numOfSessions].pop());
     }, 1000);
   });
 
@@ -75,14 +77,14 @@ export const skipQuestion = ({ sessionId, questionId }) =>
     }, 1000);
   });
 
-export const saveWinGame = ({ sessionId, time }) =>
+export const saveWinGame = ({ sessionId, score }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
     }, 1000);
   });
 
-export const saveLoseGame = ({ sessionId, time }) =>
+export const saveLoseGame = ({ sessionId, score }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();

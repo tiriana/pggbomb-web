@@ -27,7 +27,7 @@ class NameInput extends React.Component {
         name: state.name.slice(0, -1)
       }));
     }
-    console.log(keycode(e.keyCode));
+
     let char = keycode(e.keyCode);
     if (keycode(e.keyCode) === "space") {
       char = " ";
