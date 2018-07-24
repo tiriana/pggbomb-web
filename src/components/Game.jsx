@@ -1,10 +1,12 @@
-import React from 'react';
-
+import { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { SCENES } from "../consts";
+import APIPropType from "./API.propType";
+
 import Menu from "./scenes/Menu";
 import Main from "./scenes/Main";
 
-class Game extends React.Component {
+class Game extends Component {
   constructor() {
     super();
     this.state = {
@@ -15,15 +17,19 @@ class Game extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         { this.state.scene === SCENES.MENU && <Menu onNameEntered={ playerName => {
           this.setState({ playerName, scene: SCENES.MAIN })
         }}/> }
 
         { this.state.scene === SCENES.MAIN && <Main playerName={ this.state.playerName } /> }
-      </React.Fragment>
+      </Fragment>
     );
   }
+}
+
+Game.propTypes = {
+  api: APIPropType.isRequired
 }
 
 export default Game;

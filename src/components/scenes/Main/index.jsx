@@ -1,5 +1,16 @@
-import React from "react";
+import { Component } from "react";
+import PropTypes from "prop-types";
 
-const Main = ({ playerName }) => <p> Hello { playerName }<span className="blinker">█</span></p>;
+class Main extends Component {
+  render() {
+    return (
+      <p> Hello { playerName } </p>
+    );
+  }
+
+  static propTypes = {
+    playerName: PropTypes.string
+  };
+};
 
 export default Main;
