@@ -18,8 +18,8 @@ const questionsMock = [
   },
   {
     id: 4,
-    question: "Wpisz aż pięć wyrazów wyrazy",
-    answer: "Wpisz aż pięć wyrazów wyrazy"
+    question: "Wpisz aż pięć wyrazów",
+    answer: "Wpisz aż pięć wyrazów"
   }
 ];
 

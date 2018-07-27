@@ -60,7 +60,8 @@ class Main extends React.Component {
   loadQuestion() {
     this.setState(
       {
-        loading: true
+        loading: true,
+        correctAnswerAnimation: false
       },
       () => {
         this.props.questionGetter().then(({ id, question, answer } = {}) => {

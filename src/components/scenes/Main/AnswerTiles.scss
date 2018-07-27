@@ -11,17 +11,24 @@ $letterSize: 100px;
   text-align: center;
 }
 
+.empty {
+  color: transparent;
+}
+
+.word {
+}
+
 .incorrect {
   border-color: red;
 }
 
 .correctAnswer {
-  border: 5px solid yellow;
-  animation: blinker 1s linear infinite;
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1,0,0,1);
+  animation-duration: 0.5s;
 }
 
 @keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+  from { opacity: 1.0; } to { opacity: 0.0; }
 }

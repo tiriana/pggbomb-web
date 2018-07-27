@@ -2,11 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import OnAlphanumerical from "../../KeyboardListener/OnAlphanumerical";
 import styles from "./AnswerTiles.scss";
-
-// const AnswerTiles = ({ correctAnswer, onWrongLetter, onCorrectAnswer }) => <div>
-// Tutaj będzie komponent odpowiedzi.
-// Poprawna odpowiedź to "{ correctAnswer }"
-// </div>;
+import { remove as removeDiacritics } from "diacritics";
 
 class Letter extends React.Component {
   constructor(props) {
@@ -23,13 +19,13 @@ class Letter extends React.Component {
   };
 
   static defaultProps = {
-    visible: " ",
+    visible: "",
     incorrect: false
   };
 
   onLetter = letter => {
-    letter = letter.toUpperCase();
-    const expected = this.props.expected.toUpperCase();
+    letter = removeDiacritics(letter.toUpperCase());
+    const expected = removeDiacritics(this.props.expected.toUpperCase());
     if (letter === expected) {
       this.props.onCorrect(letter);
     } else {
@@ -42,10 +38,11 @@ class Letter extends React.Component {
       <div
         className={[
           styles.letter,
-          this.props.incorrect && styles.incorrect
+          this.props.incorrect && styles.incorrect,
+          !this.props.incorrect && !this.props.visible && styles.empty
         ].join(" ")}
       >
-        {this.props.visible} {this.props.incorrect}
+        {this.props.incorrect || this.props.visible || "."}
         {this.props.hasFocus && <OnAlphanumerical callback={this.onLetter} />}
       </div>
     );
@@ -85,7 +82,10 @@ class AnswerTiles extends React.Component {
               key={`letter_${letterIdx}`}
               expected={letter}
               visible={this.state.visibleLetters[letterIdx]}
-              incorrect={letterIdx === this.state.incorrectLetterIndex && this.state.incorrectLetter}
+              incorrect={
+                letterIdx === this.state.incorrectLetterIndex &&
+                this.state.incorrectLetter
+              }
               hasFocus={
                 !this.state.isCorrectAnswer &&
                 this.state.canType &&
