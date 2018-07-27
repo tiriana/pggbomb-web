@@ -13,8 +13,13 @@ const questionsMock = [
   },
   {
     id: 3,
-    question: "Słownie 4 + 3",
-    answer: "SIEDEM"
+    question: "Dwa wyrazy",
+    answer: "Dwa wyrazy"
+  },
+  {
+    id: 4,
+    question: "Wpisz aż pięć wyrazów wyrazy",
+    answer: "Wpisz aż pięć wyrazów wyrazy"
   }
 ];
 

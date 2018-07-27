@@ -38,15 +38,9 @@ class Game extends React.Component {
   onWin = score => {
     this.setState({ loading: true }, () => {
       this.props.api
-        .saveWinGame({
-          sessionId: this.state.sessionId,
-          score
-        })
+        .saveWinGame({   sessionId: this.state.sessionId, score })
         .then(() => {
-          this.setState({
-            scene: SCENES.WIN,
-            loading: false
-          });
+          this.setState({ scene: SCENES.WIN, loading: false });
         });
     });
   };

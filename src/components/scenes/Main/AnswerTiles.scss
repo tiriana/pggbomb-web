@@ -1,0 +1,27 @@
+$letterSize: 100px;
+
+.letter {
+  border: 5px solid blue;
+  width: $letterSize;
+  height: $letterSize;
+  display: inline-block;
+  margin: 5px;
+  font-size: $letterSize * 3 / 4;
+  line-height: $letterSize;
+  text-align: center;
+}
+
+.incorrect {
+  border-color: red;
+}
+
+.correctAnswer {
+  border: 5px solid yellow;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 
 module.exports = {
-  entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"],
+  entry: ["babel-polyfill", "./src/index.js"],
   module: {
     rules: [
       {
@@ -10,12 +10,26 @@ module.exports = {
         use: ["babel-loader"]
       },
       {
-        test: /\.less$/,
+        test: /\.global.less$/,
         use: ["style-loader", "css-loader", "less-loader"]
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              camelCase: true
+            }
+          },
+          {
+            loader: "sass-loader"
+          }
+        ]
       }
     ]
   },
@@ -26,10 +40,5 @@ module.exports = {
     path: __dirname + "/dist",
     publicPath: "/",
     filename: "bundle.js"
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
-  devServer: {
-    contentBase: "./dist",
-    hot: true
   }
 };

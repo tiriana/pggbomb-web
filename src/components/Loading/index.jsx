@@ -1,26 +1,37 @@
 import React from "react";
 import "./styles.scss";
 
+import { PacmanLoader } from 'react-spinners';
+
+const SPPINNER = "|/-\\";
+const MAX_STEPS = SPPINNER.length;
+
 class Loading extends React.Component {
   constructor() {
     super();
     this.state = {
-      dots: 0
+      step: 0
     };
   }
 
-  incrementDots = () => {
+  componentWillMount() {
+    // this.intereval = setInterval(this.incrementStep, 200);
+  }
+
+  componentWillUnmount() {
+    // clearInterval(this.intereval);
+  }
+
+  incrementStep = () => {
     this.setState(state => {
       return {
-        dots: (state.dots + 1) % 6
+        step: (state.step + 1) % MAX_STEPS
       };
     });
   };
 
   render() {
-    setTimeout(this.incrementDots, 200);
-
-    return <p>Loading{[...Array(this.state.dots + 1)].join(".")}</p>;
+    return <PacmanLoader size={ 25 } color={'#14fdce'} />;
   }
 }
 

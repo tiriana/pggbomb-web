@@ -17,6 +17,7 @@ class Main extends React.Component {
 
     this.state = {
       loading: false,
+      correctAnswerAnimation: false,
       questionId: null,
       questionText: null,
       correctAnswer: null,
@@ -32,7 +33,10 @@ class Main extends React.Component {
   onWrongLetter = () => {};
 
   onCorrectAnswer = () => {
-    this.props.onCorrectAnswer();
+    this.setState({
+      correctAnswerAnimation: true
+    });
+    setTimeout(() => this.loadQuestion(), 1000);
   };
 
   onNoMoreQuestions = () => {
@@ -82,19 +86,21 @@ class Main extends React.Component {
       <React.Fragment>
         {this.state.questionId && (
           <React.Fragment>
-            <p> {this.state.questionText} </p>
+            <h2> {this.state.questionText} </h2>
             <AnswerTiles
+              key={`answer_${this.state.questionId}`}
               correctAnswer={this.state.correctAnswer}
               onWrongLetter={this.onWrongLetter}
               onCorrectAnswer={this.onCorrectAnswer}
             />
 
-            {!this.state.loading && (
-              <React.Fragment>
-                <p> Naciśnij ENTER aby pominąć pytanie </p>
-                <OnEnter callback={this.skipQuestion} />
-              </React.Fragment>
-            )}
+            {!this.state.loading &&
+              !this.state.correctAnswerAnimation && (
+                <React.Fragment>
+                  <p> Naciśnij ENTER aby pominąć pytanie </p>
+                  <OnEnter callback={this.skipQuestion} />
+                </React.Fragment>
+              )}
           </React.Fragment>
         )}
 

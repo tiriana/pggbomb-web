@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.less";
+import "./styles.global.less";
 
 const CRT = ({ children }) => (
   <div className="noisy">

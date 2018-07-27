@@ -14,8 +14,8 @@ const OnAlphanumerical = ({ callback }) => (
   />
 );
 
-OnSpecial.propTypes = {
+OnAlphanumerical.propTypes = {
   callback: PropTypes.func.isRequired
 };
 
-export default OnSpecial;
+export default OnAlphanumerical;
