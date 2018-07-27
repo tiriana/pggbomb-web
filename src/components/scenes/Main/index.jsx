@@ -4,6 +4,8 @@ import Loading from "../../Loading";
 import AnswerTiles from "./AnswerTiles";
 import OnEnter from "../../KeyboardListener/OnEnter";
 
+import Timer from "../../Timer/OnEnter";
+
 const MAX_WRONG_LETTERS = 3;
 const TIME_DIFF_FOR_CORRECT_ANSWER = 10;
 const TIMES_DIFF_FOR_WRONG_LETTER = [-2, -3, -5];
@@ -104,6 +106,8 @@ class Main extends React.Component {
               )}
           </React.Fragment>
         )}
+
+        <Timer initialTime={ 3 * 60 } onTimesOut={() => console.log("timeous out")} registerPauseResume={} registerApplyTimeDiff={} />
 
         {this.state.loading && <Loading />}
       </React.Fragment>

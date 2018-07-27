@@ -51,54 +51,54 @@ export const createSession = ({ playerName }) =>
         Math.random
       );
       resolve({ sessionId: numOfSessions });
-    }, 1000);
+    }, 500);
   });
 
 export const getNextQuestion = ({ sessionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve(questionsLeftInSession[numOfSessions].pop());
-    }, 1000);
+    }, 500);
   });
 
 export const saveGoodAnswer = ({ sessionId, questionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 500);
   });
 
 export const saveBadAnswer = ({ sessionId, questionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 500);
   });
 
 export const skipQuestion = ({ sessionId, questionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 500);
   });
 
 export const saveWinGame = ({ sessionId, score }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 500);
   });
 
 export const saveLoseGame = ({ sessionId, score }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
-    }, 1000);
+    }, 500);
   });
 
 export const getLeaderboard = ({ sessionId }) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve(leaderboard);
-    }, 1000);
+    }, 500);
   });
