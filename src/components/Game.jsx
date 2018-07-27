@@ -22,6 +22,15 @@ class Game extends React.Component {
     };
   }
 
+  reset = () => {
+    this.setState({
+      scene: SCENES.MENU,
+      playerName: "",
+      sessionId: null,
+      loading: false
+    });
+  };
+
   onNameEntered = playerName => {
     this.setState({ loading: true }, () => {
       this.props.api.createSession(playerName).then(({ sessionId }) => {
@@ -38,9 +47,11 @@ class Game extends React.Component {
   onWin = score => {
     this.setState({ loading: true }, () => {
       this.props.api
-        .saveWinGame({   sessionId: this.state.sessionId, score })
+        .saveWinGame({ sessionId: this.state.sessionId, score })
         .then(() => {
           this.setState({ scene: SCENES.WIN, loading: false });
+          setTimeout(() => this.setState({ loading: true }), 1000);
+          setTimeout(() => this.reset(), 2000);
         });
     });
   };
@@ -49,7 +60,10 @@ class Game extends React.Component {
     return (
       <React.Fragment>
         {this.state.scene === SCENES.WIN && (
-          <Win sessionId={this.state.sessionId} />
+          <Win
+            sessionId={this.state.sessionId}
+            playerName={this.state.playerName}
+          />
         )}
 
         {this.state.scene === SCENES.MENU && (

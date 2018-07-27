@@ -30,6 +30,24 @@ module.exports = {
             loader: "sass-loader"
           }
         ]
+      },
+      {
+        test: /\^http/,
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 50000
+          }
+        }
+      },
+      {
+        test: /\.woff2$/,
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 50000
+          }
+        }
       }
     ]
   },

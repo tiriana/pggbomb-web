@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 
-import { PacmanLoader } from 'react-spinners';
+import { BarLoader } from 'react-spinners';
 
 const SPPINNER = "|/-\\";
 const MAX_STEPS = SPPINNER.length;
@@ -31,7 +31,7 @@ class Loading extends React.Component {
   };
 
   render() {
-    return <PacmanLoader size={ 25 } color={'#14fdce'} />;
+    return <BarLoader size={ 25 } color={'#14fdce'} />;
   }
 }
 

@@ -4,10 +4,10 @@ import NameInput from "../NameInput";
 const Menu = ({ onNameEntered }) => (
   <React.Fragment>
         <h1>PGG BOMB</h1>
-        <p>Welcome Traveler. I wanna play a game.</p>
+        <p>Witaj podróżnku. Zagrajmy w grę...</p>
 
         <p>
-          Enter your name: <NameInput onEnter={onNameEntered} />
+          Podaj swoje imię: <NameInput onEnter={onNameEntered} />
         </p>
   </React.Fragment>
 );

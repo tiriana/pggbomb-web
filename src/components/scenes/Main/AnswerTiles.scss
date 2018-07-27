@@ -1,7 +1,7 @@
 $letterSize: 100px;
 
 .letter {
-  border: 5px solid blue;
+  border: 5px solid #674A25;
   width: $letterSize;
   height: $letterSize;
   display: inline-block;
@@ -13,13 +13,21 @@ $letterSize: 100px;
 
 .empty {
   color: transparent;
+  text-indent: -99999px;
 }
 
 .word {
+  display: inline-block;
+  margin-right: 60px;
 }
 
 .incorrect {
   border-color: red;
+
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1,0,0,1);
+  animation-duration: 0.2s;
 }
 
 .correctAnswer {
