@@ -35,23 +35,29 @@ class Main extends React.Component {
     this.loadQuestion();
     this.timer.onTick(this.tick);
     this.timer.start();
-    console.log("stargint timer");
+
+    setInterval(() => {
+      const diff = 1000 * Math.floor(Math.random() * 10) - 5;
+      console.log("time diff" , diff)
+
+      this.timer.changeTime(diff);
+    }, 5000);
   }
 
   componentDidUpdate() {
-    this.setTimerTicking(
-      !!(!this.state.loading && !this.state.correctAnswerAnimation)
-    );
   }
 
   tick = () => {
     this.setState({ timeLeft: this.timer.ms });
-    console.log("time left", this.timer.ms);
+    // console.log("time left", this.timer.ms);
+
+
   };
 
   onWrongLetter = () => {};
 
   onCorrectAnswer = () => {
+    this.timer.stop();
     this.setState({
       correctAnswerAnimation: true
     });
@@ -83,10 +89,13 @@ class Main extends React.Component {
         correctAnswerAnimation: false
       },
       () => {
+        this.timer.stop();
         this.props.questionGetter().then(({ id, question, answer } = {}) => {
           if (!id) {
             return this.onNoMoreQuestions();
           }
+
+          this.timer.start();
 
           return this.setState({
             questionId: id,
@@ -99,12 +108,6 @@ class Main extends React.Component {
       }
     );
   }
-
-  setTimerTicking = isTicking => {
-    // if (this._setTimerTicking) {
-    //   this._setTimerTicking(isTicking);
-    // }
-  };
 
   applyTimeDiff = diff => {
     // if (this.__applyTimeDiff) {
