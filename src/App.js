@@ -6,9 +6,9 @@ import * as api from "./api/mock/game";
 console.log(api);
 
 const App = () => (
-  <CRT>
+  // <CRT>
     <Game api={api} />
-  </CRT>
+  // </CRT>
 );
 
 export default App;

@@ -1,4 +1,16 @@
 {
-  "presets": ["env", "react", "stage-2"],
+  "presets": [
+    [
+      "env",
+      {
+        "useBuiltIns": true,
+        "targets": {
+          "browsers": [">0.25%", "ie >= 11", "not op_mini all"]
+        }
+      }
+    ],
+    "react",
+    "stage-2"
+  ],
   "plugins": ["transform-class-properties", "emotion"]
 }

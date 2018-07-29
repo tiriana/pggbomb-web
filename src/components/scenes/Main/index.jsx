@@ -4,7 +4,8 @@ import Loading from "../../Loading";
 import AnswerTiles from "./AnswerTiles";
 import OnEnter from "../../KeyboardListener/OnEnter";
 
-import Timer from "../../Timer/OnEnter";
+import Clock from "../../Clock";
+import BombTimer from "../../lib/BombTimer";
 
 const MAX_WRONG_LETTERS = 3;
 const TIME_DIFF_FOR_CORRECT_ANSWER = 10;
@@ -24,13 +25,29 @@ class Main extends React.Component {
       questionText: null,
       correctAnswer: null,
       wrongLettersGiven: 0,
-      isTimerRunning: true
+      timeLeft: this.props.time
     };
+
+    this.timer = new BombTimer({ time: this.props.time });
   }
 
   componentDidMount() {
     this.loadQuestion();
+    this.timer.onTick(this.tick);
+    this.timer.start();
+    console.log("stargint timer");
   }
+
+  componentDidUpdate() {
+    this.setTimerTicking(
+      !!(!this.state.loading && !this.state.correctAnswerAnimation)
+    );
+  }
+
+  tick = () => {
+    this.setState({ timeLeft: this.timer.ms });
+    console.log("time left", this.timer.ms);
+  };
 
   onWrongLetter = () => {};
 
@@ -67,7 +84,6 @@ class Main extends React.Component {
       },
       () => {
         this.props.questionGetter().then(({ id, question, answer } = {}) => {
-          console.log({ id, question, answer });
           if (!id) {
             return this.onNoMoreQuestions();
           }
@@ -83,6 +99,18 @@ class Main extends React.Component {
       }
     );
   }
+
+  setTimerTicking = isTicking => {
+    // if (this._setTimerTicking) {
+    //   this._setTimerTicking(isTicking);
+    // }
+  };
+
+  applyTimeDiff = diff => {
+    // if (this.__applyTimeDiff) {
+    //   this.__applyTimeDiff(diff);
+    // }
+  };
 
   render() {
     return (
@@ -107,7 +135,7 @@ class Main extends React.Component {
           </React.Fragment>
         )}
 
-        <Timer initialTime={ 3 * 60 } onTimesOut={() => console.log("timeous out")} registerPauseResume={} registerApplyTimeDiff={} />
+        <Clock timeLeftMS={this.state.timeLeft} />
 
         {this.state.loading && <Loading />}
       </React.Fragment>

@@ -9,7 +9,7 @@ import Menu from "./scenes/Menu";
 import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 
-const SESSION_TIME = 60 + 3;
+const SESSION_TIME = 60000;
 
 class Game extends React.Component {
   constructor(...args) {
