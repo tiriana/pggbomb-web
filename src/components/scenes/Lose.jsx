@@ -1,5 +1,5 @@
 import React from "react";
 
-const Lose = () => <div>This is LOSE scene</div>;
+const Lose = ({ playerName }) => <h1>GAME OVER! { playerName }</h1>;
 
 export default Lose;

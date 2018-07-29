@@ -34,14 +34,15 @@ class Main extends React.Component {
   componentDidMount() {
     this.loadQuestion();
     this.timer.onTick(this.tick);
+    this.timer.onDone(this.props.onLose);
     this.timer.start();
 
-    setInterval(() => {
-      const diff = 1000 * Math.floor(Math.random() * 10) - 5;
-      console.log("time diff" , diff)
-
-      this.timer.changeTime(diff);
-    }, 5000);
+    // setInterval(() => {
+    //   const diff = 1000 * Math.floor(Math.random() * 10) - 5;
+    //   console.log("time diff" , diff)
+    //
+    //   this.timer.changeTime(diff);
+    // }, 5000);
   }
 
   componentDidUpdate() {
@@ -108,12 +109,6 @@ class Main extends React.Component {
       }
     );
   }
-
-  applyTimeDiff = diff => {
-    // if (this.__applyTimeDiff) {
-    //   this.__applyTimeDiff(diff);
-    // }
-  };
 
   render() {
     return (
