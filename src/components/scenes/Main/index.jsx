@@ -6,10 +6,11 @@ import OnEnter from "../../KeyboardListener/OnEnter";
 
 import Clock from "../../Clock";
 import BombTimer from "../../lib/BombTimer";
+import styles from "./mainScene.scss";
 
 const MAX_WRONG_LETTERS = 3;
-const TIME_DIFF_FOR_CORRECT_ANSWER = 10;
-const TIMES_DIFF_FOR_WRONG_LETTER = [-2, -3, -5];
+const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
+const TIMES_DIFF_FOR_WRONG_LETTER = -2;
 const TIMES_DIFF_FOR_SKIP_QUESTION = -2;
 
 class Main extends React.Component {
@@ -25,7 +26,8 @@ class Main extends React.Component {
       questionText: null,
       correctAnswer: null,
       wrongLettersGiven: 0,
-      timeLeft: this.props.time
+      timeLeft: this.props.time,
+      timeDiffs: {}
     };
 
     this.timer = new BombTimer({ time: this.props.time });
@@ -35,37 +37,62 @@ class Main extends React.Component {
     this.loadQuestion();
     this.timer.onTick(this.tick);
     this.timer.onDone(this.props.onLose);
-    this.timer.start();
-
-    // setInterval(() => {
-    //   const diff = 1000 * Math.floor(Math.random() * 10) - 5;
-    //   console.log("time diff" , diff)
-    //
-    //   this.timer.changeTime(diff);
-    // }, 5000);
-  }
-
-  componentDidUpdate() {
   }
 
   tick = () => {
     this.setState({ timeLeft: this.timer.ms });
-    // console.log("time left", this.timer.ms);
-
-
   };
 
-  onWrongLetter = () => {};
+  onWrongLetter = () => {
+    this.changeTimeLeft(TIMES_DIFF_FOR_WRONG_LETTER);
+  };
+
+  changeTimeLeft = diff => {
+    this.indicateTimeDiff(diff);
+    this.setState(({ timeLeft: prev }) => ({ timeLeft: prev + diff }));
+    this.timer.changeTime(diff * 1000);
+  };
+
+  indicateTimeDiff = diff => {
+    const diffNotificationId = setTimeout(() => {
+      this.removeTimeDiffNotification(diffNotificationId);
+    }, 3000);
+    this.addTimeDiffNotification(diffNotificationId, diff);
+  };
+
+  addTimeDiffNotification = (id, diff) => {
+    this.setState(prevState => {
+      const timeDiffs = { ...prevState.timeDiffs };
+      timeDiffs[id] = diff;
+
+      return {
+        timeDiffs
+      };
+    });
+  };
+
+  removeTimeDiffNotification = id => {
+    this.setState(prevState => {
+      const timeDiffs = { ...prevState.timeDiffs };
+      delete timeDiffs[id];
+
+      return {
+        timeDiffs
+      };
+    });
+  };
 
   onCorrectAnswer = () => {
     this.timer.stop();
     this.setState({
       correctAnswerAnimation: true
     });
+    this.changeTimeLeft(TIME_DIFF_FOR_CORRECT_ANSWER);
     setTimeout(() => this.loadQuestion(), 1000);
   };
 
   onNoMoreQuestions = () => {
+    this.timer.stop();
     this.setState(
       {
         loading: false,
@@ -79,7 +106,6 @@ class Main extends React.Component {
   };
 
   skipQuestion = () => {
-    console.log("skip question");
     this.loadQuestion();
   };
 
@@ -110,6 +136,20 @@ class Main extends React.Component {
     );
   }
 
+  renderTimeDiffNotifications = () => {
+    return Object.keys(this.state.timeDiffs).map(timeDiffId => {
+      const timeDiff = this.state.timeDiffs[timeDiffId];
+      const style = timeDiff < 0 ? styles.red : styles.blue;
+      const sign = timeDiff < 0 ? "" : "+";
+      return (
+        <span className={ [styles.timeDiff, style].join(" ") } key={`notification_${timeDiffId}`}>
+          {" " + sign}
+          {timeDiff}
+        </span>
+      );
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -123,6 +163,9 @@ class Main extends React.Component {
               onCorrectAnswer={this.onCorrectAnswer}
             />
 
+            <Clock timeLeftMS={this.state.timeLeft} />
+            {this.renderTimeDiffNotifications().reverse()}
+
             {!this.state.loading &&
               !this.state.correctAnswerAnimation && (
                 <React.Fragment>
@@ -132,8 +175,6 @@ class Main extends React.Component {
               )}
           </React.Fragment>
         )}
-
-        <Clock timeLeftMS={this.state.timeLeft} />
 
         {this.state.loading && <Loading />}
       </React.Fragment>

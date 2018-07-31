@@ -42,7 +42,7 @@ class Letter extends React.Component {
           !this.props.incorrect && !this.props.visible && styles.empty
         ].join(" ")}
       >
-        {this.props.incorrect || this.props.visible || "."}
+        {this.props.incorrect || (this.props.visible && this.props.expected.toUpperCase()) || "."}
         {this.props.hasFocus && <OnAlphanumerical callback={this.onLetter} />}
       </div>
     );
@@ -81,7 +81,7 @@ class AnswerTiles extends React.Component {
             <Letter
               key={`letter_${letterIdx}`}
               expected={letter}
-              visible={this.state.visibleLetters[letterIdx]}
+              visible={!!this.state.visibleLetters[letterIdx]}
               incorrect={
                 letterIdx === this.state.incorrectLetterIndex &&
                 this.state.incorrectLetter
@@ -104,6 +104,7 @@ class AnswerTiles extends React.Component {
                 });
               }}
               onIncorrect={letter => {
+                this.props.onWrongLetter();
                 this.setState(
                   {
                     canType: false,

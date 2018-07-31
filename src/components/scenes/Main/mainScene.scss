@@ -1,0 +1,19 @@
+.red {
+  color: #FF1434;
+}
+
+.blue {
+  color: #4C4E76;
+}
+
+.timeDiff {
+  animation-name: fadeOut;
+  animation-duration: 5s;
+
+  font-size: 35px;
+}
+
+@keyframes fadeOut {
+   0% {opacity: 1;}
+   100% {opacity: 0;}
+}
