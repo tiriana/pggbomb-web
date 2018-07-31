@@ -10,7 +10,7 @@ import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 import Lose from "./scenes/Lose";
 
-const SESSION_TIME = 20000;
+const SESSION_TIME = 60000;
 
 class Game extends React.Component {
   constructor(...args) {
