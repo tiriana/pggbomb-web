@@ -17,12 +17,12 @@ class Timer extends React.Component {
 
   render() {
     const isWarningZone = this.props.timeLeftMS < this.props.warningZone * 1000;
-    // const minutes = (this.props.timeLeftMS / (1000 * 60)) % 60;
-    // const seconds = (this.props.timeLeftMS / 1000) % 60;
-    // const milliseconds = this.props.timeLeftMS % 1000;
+    const seconds = (this.props.timeLeftMS / 1000) % 60;
+    const minutes = ((this.props.timeLeftMS / (1000*60)) % 60);
+    const milliseconds = this.props.timeLeftMS % 1000;
     return (
       <span className={styles.timer}>
-         time left: {this.props.timeLeftMS}
+         { pad(minutes, 2)}:{ pad(seconds, 2)}:{ pad(milliseconds, 3)} ----  { this.props.timeLeftMS }
       </span>
     );
   }

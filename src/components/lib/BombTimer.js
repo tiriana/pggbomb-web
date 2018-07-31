@@ -72,6 +72,12 @@ class BombTimer {
 
     this._stopwatch.reset(this._stopwatch.ms + timeDiffMS);
 
+    if (this._stopwatch.ms <= 0) {
+      this.stop();
+      this.onDone();
+      return ;
+    }
+
     isRunning && this.start();
   }
 }
