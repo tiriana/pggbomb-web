@@ -32,7 +32,7 @@ module.exports = {
         ]
       },
       {
-        test: /\^http/,
+        test: /^http/,
         use: {
           loader: "url-loader",
           options: {
@@ -46,6 +46,15 @@ module.exports = {
           loader: "url-loader",
           options: {
             limit: 50000
+          }
+        }
+      },
+      {
+        test: /\.mp3$/,
+        use: {
+          loader: "base64-loader",
+          options: {
+            name: '[name]_[hash].[ext]',
           }
         }
       }

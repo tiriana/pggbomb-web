@@ -13,6 +13,13 @@ const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
 const TIMES_DIFF_FOR_WRONG_LETTER = -2;
 const TIMES_DIFF_FOR_SKIP_QUESTION = -2;
 
+import { playHackingTime } from "../../lib/music";
+import {
+  playCorrectAnswerSound,
+  playSkippedQuestionSound,
+  playBeep
+} from "../../lib/sounds";
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +38,19 @@ class Main extends React.Component {
     };
 
     this.timer = new BombTimer({ time: this.props.time });
+  }
+
+  componentWillMount() {
+    playHackingTime();
+    this.tickingSound = setInterval(() => {
+      if (this.timer.isRunning()) {
+        playBeep();
+      }
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.tickingSound);
   }
 
   componentDidMount() {
@@ -83,12 +103,17 @@ class Main extends React.Component {
   };
 
   onCorrectAnswer = () => {
+    playCorrectAnswerSound();
     this.timer.stop();
     this.setState({
+      loading: true,
       correctAnswerAnimation: true
-    });
-    this.changeTimeLeft(TIME_DIFF_FOR_CORRECT_ANSWER);
-    setTimeout(() => this.loadQuestion(), 1000);
+    }, () => {
+      this.props.onCorrectAnswer().then(() => {
+        this.changeTimeLeft(TIME_DIFF_FOR_CORRECT_ANSWER);
+        setTimeout(() => this.loadQuestion(), 1000);
+      });
+    })
   };
 
   onNoMoreQuestions = () => {
@@ -106,6 +131,7 @@ class Main extends React.Component {
   };
 
   skipQuestion = () => {
+    playSkippedQuestionSound();
     this.loadQuestion();
   };
 
@@ -142,7 +168,10 @@ class Main extends React.Component {
       const style = timeDiff < 0 ? styles.red : styles.blue;
       const sign = timeDiff < 0 ? "" : "+";
       return (
-        <span className={ [styles.timeDiff, style].join(" ") } key={`notification_${timeDiffId}`}>
+        <span
+          className={[styles.timeDiff, style].join(" ")}
+          key={`notification_${timeDiffId}`}
+        >
           {" " + sign}
           {timeDiff}
         </span>

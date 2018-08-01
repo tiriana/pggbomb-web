@@ -18,7 +18,7 @@ class Timer extends React.Component {
   render() {
     const isWarningZone = this.props.timeLeftMS < this.props.warningZone * 1000;
     const minutes = this.props.timeLeftMS / 1000 / 60;
-    const seconds = this.props.timeLeftMS / 1000;
+    const seconds = this.props.timeLeftMS / 1000 % 60;
     const milliseconds = this.props.timeLeftMS % 1000;
     return (
       <span className={styles.timer}>

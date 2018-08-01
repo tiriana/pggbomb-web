@@ -2,6 +2,8 @@ import React from "react";
 const keycode = require("keycode");
 import Cursor from "../Cursor";
 
+import { playTypingSound } from "../lib/sounds";
+
 class NameInput extends React.Component {
   constructor(...args) {
     super(...args);
@@ -21,8 +23,10 @@ class NameInput extends React.Component {
   onKeyPressed = (e) => {
     if (keycode("Enter") === e.keyCode && this.state.name.length > 3) {
       this.props.onEnter(this.state.name);
+      playTypingSound();
     }
     if (keycode("backspace") === e.keyCode && this.state.name.length > 0) {
+      playTypingSound();
       return this.setState(state => ({
         name: state.name.slice(0, -1)
       }));
@@ -33,6 +37,7 @@ class NameInput extends React.Component {
       char = " ";
     }
     if (/[ 0-9a-z]/.test(char) && char.length === 1) {
+      playTypingSound();
       return this.setState(state => ({
         name: (state.name + char.toUpperCase()).slice(0, 20)
       }));

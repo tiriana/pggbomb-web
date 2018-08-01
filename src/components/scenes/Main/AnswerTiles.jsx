@@ -4,6 +4,8 @@ import OnAlphanumerical from "../../KeyboardListener/OnAlphanumerical";
 import styles from "./AnswerTiles.scss";
 import { remove as removeDiacritics } from "diacritics";
 
+import { playTypingSound, playWrongLetterSound } from "../../lib/sounds";
+
 class Letter extends React.Component {
   constructor(props) {
     super(props);
@@ -92,6 +94,7 @@ class AnswerTiles extends React.Component {
                 this.state.focusedLetter === letterIdx
               }
               onCorrect={letter => {
+                playTypingSound();
                 this.setState(state => {
                   const visibleLetters = [...state.visibleLetters];
                   visibleLetters[letterIdx] = letter;
@@ -104,6 +107,7 @@ class AnswerTiles extends React.Component {
                 });
               }}
               onIncorrect={letter => {
+                playWrongLetterSound();
                 this.props.onWrongLetter();
                 this.setState(
                   {
