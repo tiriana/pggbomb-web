@@ -6,12 +6,41 @@
   color: #4C4E76;
 }
 
+
+.clockWrapper {
+  display: flex;
+  direction: rtl;
+}
+
 .timeDiff {
   animation-name: fadeOut;
   animation-duration: 5s;
-
-  font-size: 35px;
+  font-size: 68px;
+  display: flex;
+  direction: ltr;
+  padding-right: 0.5rem;
 }
+
+.categoryName {
+  font-size: 36px;
+  text-align: left;
+}
+
+.questionContent {
+  font-size: 51px;
+  text-align: left;
+}
+
+.points {
+  text-align: right;
+  font-size: 36px;
+}
+
+.description {
+  font-size: 36px;
+  margin-top: 2rem;
+}
+
 
 @keyframes fadeOut {
    0% {opacity: 1;}

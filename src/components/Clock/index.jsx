@@ -21,9 +21,9 @@ class Timer extends React.Component {
     const seconds = this.props.timeLeftMS / 1000 % 60;
     const milliseconds = this.props.timeLeftMS % 1000;
     return (
-      <span className={styles.timer}>
+      <div className={styles.timer}>
          { pad(0|minutes, 2)}:{ pad(0|seconds, 2)}:{ pad(milliseconds, 3)}
-      </span>
+      </div>
     );
   }
 }

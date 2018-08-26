@@ -24,7 +24,7 @@ class Menu extends React.Component {
         <h1 style={header}>LOADING PROGRAM: PGG BOMB</h1>
         <p style={description}>Witaj podróżniku. Zagrajmy w grę...</p>
 
-        <div>
+        <div style={description}>
           Podaj swoje imię: <NameInput onEnter={onNameEntered} />
         </div>
       </React.Fragment>

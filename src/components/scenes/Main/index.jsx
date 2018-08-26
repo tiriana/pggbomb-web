@@ -173,8 +173,8 @@ class Main extends React.Component {
           className={[styles.timeDiff, style].join(" ")}
           key={`notification_${timeDiffId}`}
         >
-          {" " + sign}
           {timeDiff}
+          {" " + sign}
         </span>
       );
     });
@@ -185,7 +185,14 @@ class Main extends React.Component {
       <React.Fragment>
         {this.state.questionId && (
           <React.Fragment>
-            <h2> {this.state.questionText} </h2>
+            <div className={styles.clockWrapper}>
+              <Clock timeLeftMS={this.state.timeLeft} />
+              {this.renderTimeDiffNotifications()}
+            </div>
+            <div className={styles.points}>Punkty: 1265</div>
+
+            <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
+            <div className={styles.questionContent}> {this.state.questionText} </div>
             <AnswerTiles
               key={`answer_${this.state.questionId}`}
               correctAnswer={this.state.correctAnswer}
@@ -193,13 +200,11 @@ class Main extends React.Component {
               onCorrectAnswer={this.onCorrectAnswer}
             />
 
-            <Clock timeLeftMS={this.state.timeLeft} />
-            {this.renderTimeDiffNotifications().reverse()}
 
             {!this.state.loading &&
               !this.state.correctAnswerAnimation && (
                 <React.Fragment>
-                  <p> Naciśnij ENTER aby pominąć pytanie </p>
+                  <p className={styles.description}> Naciśnij ENTER aby pominąć pytanie (Tracisz od razu 5 sekund) </p>
                   <OnEnter callback={this.skipQuestion} />
                 </React.Fragment>
               )}

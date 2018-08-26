@@ -4,7 +4,6 @@ $letterSize: 100px;
   border: 5px solid #674A25;
   width: $letterSize;
   height: $letterSize;
-  display: inline-block;
   margin: 5px;
   font-size: $letterSize * 3 / 4;
   line-height: $letterSize;
@@ -17,8 +16,8 @@ $letterSize: 100px;
 }
 
 .word {
-  display: inline-block;
-  margin-right: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 .incorrect {
