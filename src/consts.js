@@ -3,5 +3,6 @@ export const SCENES = {
   MAIN: "MAIN",
   LOSE: "LOSE",
   WIN: "WIN",
-  LEADERBOARD: "LEADERBOARD"
+  LEADERBOARD: "LEADERBOARD",
+  IDLE: "IDLE"
 };

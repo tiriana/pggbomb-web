@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { SCENES } from "../consts";
 import APIPropType from "./API.propType";
-
+import IdleTimer from 'react-idle-timer'
 import Loading from "./Loading";
 
 import Menu from "./scenes/Menu";
 import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 import Lose from "./scenes/Lose";
+import Idle from "./scenes/Idle";
 
 const SESSION_TIME = 60000;
 
@@ -16,16 +17,32 @@ class Game extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      scene: SCENES.MENU,
+      scene: SCENES.IDLE,
       playerName: "",
       sessionId: null,
       loading: false
     };
+
+    this.idleTimer = null
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      var currentScene = this.state.scene;
+      var idleTime = this.idleTimer.getElapsedTime();
+      if (currentScene == SCENES.MENU || currentScene == SCENES.LOSE || currentScene == SCENES.WIN || currentScene == SCENES.LEADERBOARD) {
+        if (idleTime > 30000) {
+          this.reset();
+        }
+      } else {
+        var idleTime = this.idleTimer.reset();
+      }
+    }, 1000);
   }
 
   reset = () => {
     this.setState({
-      scene: SCENES.MENU,
+      scene: SCENES.IDLE,
       playerName: "",
       sessionId: null,
       loading: false
@@ -69,56 +86,80 @@ class Game extends React.Component {
     });
   };
 
+  onEnterPress = () => {
+    this.setState({ loading: true }, () => {
+      new Promise(resolve => {
+        setTimeout(() => {
+          this.setState({
+            scene: SCENES.MENU,
+            loading: false
+          });
+        }, 500);
+      })
+    });
+  }
+
   render() {
     return (
-      <React.Fragment>
-        {this.state.scene === SCENES.WIN && (
-          <Win
-            sessionId={this.state.sessionId}
-            playerName={this.state.playerName}
-          />
-        )}
+      <IdleTimer
+        ref={ref => { this.idleTimer = ref }}
+        onActive={this.onActive}
+        onIdle={this.onIdle}
+        timeout={this.state.timeout}
+        startOnLoad>
+        <React.Fragment>
+          {this.state.scene === SCENES.WIN && (
+            <Win
+              sessionId={this.state.sessionId}
+              playerName={this.state.playerName}
+            />
+          )}
 
-        {this.state.scene === SCENES.LOSE && (
-          <Lose
-            sessionId={this.state.sessionId}
-            playerName={this.state.playerName}
-          />
-        )}
+          {this.state.scene === SCENES.LOSE && (
+            <Lose
+              sessionId={this.state.sessionId}
+              playerName={this.state.playerName}
+            />
+          )}
 
-        {this.state.scene === SCENES.MENU && (
-          <Menu onNameEntered={this.onNameEntered} />
-        )}
+          {this.state.scene === SCENES.MENU && (
+            <Menu onNameEntered={this.onNameEntered} />
+          )}
 
-        {this.state.scene === SCENES.MAIN && (
-          <Main
-            playerName={this.state.playerName}
-            sessionId={this.state.sessionId}
-            onWin={this.onWin}
-            onLose={this.onLose}
-            questionGetter={() =>
-              this.props.api.getNextQuestion({
-                sessionId: this.state.sessionId
-              })
-            }
-            onCorrectAnswer={questionId =>
-              this.props.api.saveGoodAnswer({
-                sessionId: this.state.sessionId,
-                questionId
-              })
-            }
-            onWrongAnswer={questionId =>
-              this.props.api.saveBadAnswer({
-                sessionId: this.state.sessionId,
-                questionId
-              })
-            }
-            time={SESSION_TIME}
-          />
-        )}
+          {this.state.scene === SCENES.MAIN && (
+            <Main
+              playerName={this.state.playerName}
+              sessionId={this.state.sessionId}
+              onWin={this.onWin}
+              onLose={this.onLose}
+              questionGetter={() =>
+                this.props.api.getNextQuestion({
+                  sessionId: this.state.sessionId
+                })
+              }
+              onCorrectAnswer={questionId =>
+                this.props.api.saveGoodAnswer({
+                  sessionId: this.state.sessionId,
+                  questionId
+                })
+              }
+              onWrongAnswer={questionId =>
+                this.props.api.saveBadAnswer({
+                  sessionId: this.state.sessionId,
+                  questionId
+                })
+              }
+              time={SESSION_TIME}
+            />
+          )}
 
-        {this.state.loading && <Loading />}
-      </React.Fragment>
+          {this.state.scene === SCENES.IDLE && (
+            <Idle onEnterPress={this.onEnterPress} />
+          )}
+
+          {this.state.loading && <Loading />}
+        </React.Fragment>
+      </IdleTimer>
     );
   }
 }

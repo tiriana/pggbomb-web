@@ -49,7 +49,7 @@ module.exports = {
           }
         }
       },
-	  {
+      {
         test: /\.html$/,
         use: [
           {
@@ -65,6 +65,10 @@ module.exports = {
             name: '[name]_[hash].[ext]',
           }
         }
+      },
+      {
+        test: /\.(png|jp(e*)g|svg)$/,
+        loader: 'file-loader'
       }
     ]
   },
@@ -79,7 +83,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/dist",
-    publicPath: "/",
+    publicPath: '/',
     filename: "bundle.js"
   }
 };
