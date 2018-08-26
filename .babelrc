@@ -12,5 +12,5 @@
     "react",
     "stage-2"
   ],
-  "plugins": ["transform-class-properties", "emotion"]
+  "plugins": ["transform-class-properties", "emotion", "react-hot-loader/babel"]
 }

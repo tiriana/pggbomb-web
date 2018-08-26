@@ -1,5 +1,5 @@
-const webpack = require("webpack");
 
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
   module: {
@@ -14,7 +14,7 @@ module.exports = {
         use: ["style-loader", "css-loader", "less-loader"]
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
           {
             loader: "style-loader"
@@ -49,6 +49,14 @@ module.exports = {
           }
         }
       },
+	  {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      },
       {
         test: /\.mp3$/,
         use: {
@@ -60,6 +68,12 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+      filename: "./index.html"
+    })
+  ],
   resolve: {
     extensions: ["*", ".js", ".jsx"]
   },

@@ -8,17 +8,18 @@ import Clock from "../../Clock";
 import BombTimer from "../../lib/BombTimer";
 import styles from "./mainScene.scss";
 
-const MAX_WRONG_LETTERS = 3;
-const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
-const TIMES_DIFF_FOR_WRONG_LETTER = -2;
-const TIMES_DIFF_FOR_SKIP_QUESTION = -2;
-
 import { playHackingTime } from "../../lib/music";
 import {
   playCorrectAnswerSound,
   playSkippedQuestionSound,
   playBeep
 } from "../../lib/sounds";
+
+const MAX_WRONG_LETTERS = 3;
+const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
+const TIMES_DIFF_FOR_WRONG_LETTER = -2;
+const TIMES_DIFF_FOR_SKIP_QUESTION = -2;
+
 
 class Main extends React.Component {
   constructor(props) {

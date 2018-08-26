@@ -1,8 +1,9 @@
 import React from "react";
-const keycode = require("keycode");
 import Cursor from "../Cursor";
 
 import { playTypingSound } from "../lib/sounds";
+
+const keycode = require("keycode");
 
 class NameInput extends React.Component {
   constructor(...args) {
