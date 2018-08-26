@@ -15,9 +15,20 @@ $letterSize: 100px;
   text-indent: -99999px;
 }
 
-.word {
+.wordWrapper {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.word:not(:first-child) {
+  display: flex;
+  margin-left: 60px;
+}
+
+.word {
+  display: flex;
+  margin-right: 0px;
 }
 
 .incorrect {

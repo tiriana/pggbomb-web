@@ -20,6 +20,16 @@ const questionsMock = [
     id: 4,
     question: "Wpisz aż pięć wyrazów",
     answer: "Wpisz aż pięć wyrazów"
+  },
+  {
+    id: 5,
+    question: "Twoja stara je",
+    answer: "Banana"
+  },
+  {
+    id: 6,
+    question: "Najdłuższe polskie słowo",
+    answer: "Nie znam"
   }
 ];
 

@@ -18,7 +18,7 @@ import {
 const MAX_WRONG_LETTERS = 3;
 const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
 const TIMES_DIFF_FOR_WRONG_LETTER = -2;
-const TIMES_DIFF_FOR_SKIP_QUESTION = -2;
+const TIMES_DIFF_FOR_SKIP_QUESTION = -5;
 
 
 class Main extends React.Component {

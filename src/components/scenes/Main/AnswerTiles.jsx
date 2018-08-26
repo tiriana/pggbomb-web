@@ -75,7 +75,8 @@ class AnswerTiles extends React.Component {
 
   renderLettersTiles = () => {
     let letters = 0;
-    return this.props.correctAnswer.split(" ").map((word, idx) => (
+
+    var renderedAnswer = this.props.correctAnswer.split(" ").map((word, idx) => (
       <div className={styles.word} key={`word_${idx}`}>
         {word.split("").map(letter => {
           let letterIdx = letters++;
@@ -131,6 +132,8 @@ class AnswerTiles extends React.Component {
         })}
       </div>
     ));
+
+    return <div className={styles.wordWrapper}>{renderedAnswer}</div>;
   };
 
   render() {
