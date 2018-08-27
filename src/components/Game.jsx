@@ -10,7 +10,7 @@ import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 import Lose from "./scenes/Lose";
 import Idle from "./scenes/Idle";
-import LeaderBoard from "./scenes/LeaderBoard";
+import LeaderBoard from "./scenes/Leaderboard";
 
 const SESSION_TIME = 10000;
 const IDLE_MAX_TIME =  120 * 1000;
@@ -18,7 +18,7 @@ class Game extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      scene: SCENES.MENU,
+      scene: SCENES.IDLE,
       playerName: "",
       sessionId: null,
       loading: false,

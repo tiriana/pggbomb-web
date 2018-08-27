@@ -199,7 +199,9 @@ class Main extends React.Component {
             <div className={styles.points + ' regular-text'}>Punkty: 1265</div>
 
             <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
-            <div className={styles.questionContent}> {this.state.questionText} </div>
+            <div className={styles.questionContent}>
+                {this.state.questionText}
+            </div>
             <AnswerTiles
               key={`answer_${this.state.questionId}`}
               correctAnswer={this.state.correctAnswer}
