@@ -22,6 +22,7 @@ const TIMES_DIFF_FOR_SKIP_QUESTION = -5;
 
 
 class Main extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -51,6 +52,7 @@ class Main extends React.Component {
   }
 
   componentWillUnmount() {
+    this.timer.unbindTick();
     clearInterval(this.tickingSound);
   }
 
@@ -70,7 +72,11 @@ class Main extends React.Component {
 
   changeTimeLeft = diff => {
     this.indicateTimeDiff(diff);
-    this.setState(({ timeLeft: prev }) => ({ timeLeft: prev + diff }));
+    this.setState(({ timeLeft: prev }) => {
+      var time = prev + diff;
+      console.log(time);
+      return ({ timeLeft: time > 0 ? time : 0 });
+    });
     this.timer.changeTime(diff * 1000);
   };
 

@@ -27,6 +27,10 @@ class BombTimer {
     this._stopwatch.onTime(cb);
   }
 
+  unbindTick() {
+    this._stopwatch.removeAllListeners('time');
+  }
+
   onAlmostDone(cb) {
     this._stopwatch.onAlmostDone(cb);
   }
@@ -70,13 +74,13 @@ class BombTimer {
     }
     const isRunning = this.isRunning();
 
-    this._stopwatch.reset(this._stopwatch.ms + timeDiffMS);
-
-    if (this._stopwatch.ms <= 0) {
+    if (this._stopwatch.ms + timeDiffMS <= 0) {
       this.stop();
-      this.onDone();
-      return ;
+      this._stopwatch.emit('done');
+    } else {
+      this._stopwatch.reset(this._stopwatch.ms + timeDiffMS);
     }
+
 
     isRunning && this.start();
   }

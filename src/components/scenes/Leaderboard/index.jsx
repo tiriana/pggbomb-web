@@ -24,9 +24,9 @@ class Leaderboard extends React.Component {
         <div className={styles.scoreTitle}>TABLICA WYNIKÓW</div>
         <div className='regular-text'>
           <ol className={styles.wrapper}>
-            {this.props.leaderBoard.map(playerScore => {
+            {this.props.leaderBoard.map((playerScore, index) => {
               return (
-                <li className={styles.clear}><span className={styles.playerName}>{playerScore.playerName + ' (ID:' + playerScore.playerId + ')'}</span> <span className={styles.playerScore}> {'LICZBA PUNKTÓW: ' + playerScore.result}</span></li>
+                <li key={index} className={styles.clear}><span className={styles.playerName}>{playerScore.playerName + ' (ID:' + playerScore.playerId + ')'}</span> <span className={styles.playerScore}> {'LICZBA PUNKTÓW: ' + playerScore.result}</span></li>
               );
             })}
           </ol>

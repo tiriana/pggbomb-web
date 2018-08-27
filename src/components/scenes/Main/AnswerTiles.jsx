@@ -13,15 +13,15 @@ class Letter extends React.Component {
 
   static propTypes = {
     expected: PropTypes.string.isRequired,
-    visible: PropTypes.string,
+    visible: PropTypes.bool,
     hasFocus: PropTypes.bool.isRequired,
-    incorrect: PropTypes.string,
+    incorrect: PropTypes.bool,
     onCorrect: PropTypes.func.isRequired,
     onIncorrect: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    visible: "",
+    visible: false,
     incorrect: false
   };
 
