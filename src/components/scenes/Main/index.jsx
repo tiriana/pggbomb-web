@@ -139,6 +139,7 @@ class Main extends React.Component {
 
   skipQuestion = () => {
     playSkippedQuestionSound();
+    this.changeTimeLeft(TIMES_DIFF_FOR_SKIP_QUESTION);
     this.loadQuestion();
   };
 
