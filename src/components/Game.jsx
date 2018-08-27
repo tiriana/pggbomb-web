@@ -110,7 +110,7 @@ class Game extends React.Component {
       this.props.api
         .saveLoseGame({ sessionId: this.state.sessionId, score })
         .then(() => {
-          this.leaderBoard();
+          this.setState({ scene: SCENES.LOSE, loading: false });
         });
     });
   };
