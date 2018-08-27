@@ -13,15 +13,16 @@ import Idle from "./scenes/Idle";
 import LeaderBoard from "./scenes/LeaderBoard";
 
 const SESSION_TIME = 10000;
-
+const IDLE_MAX_TIME =  120 * 1000;
 class Game extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      scene: SCENES.LOSE,
+      scene: SCENES.MENU,
       playerName: "",
       sessionId: null,
-      loading: false
+      loading: false,
+      leaderBoard: []
     };
 
     this.idleTimer = null;
@@ -32,11 +33,11 @@ class Game extends React.Component {
       var currentScene = this.state.scene;
       var idleTime = this.idleTimer.getElapsedTime();
       if (currentScene == SCENES.MENU || currentScene == SCENES.LEADERBOARD) {
-        if (idleTime > 30000) {
+        if (idleTime > IDLE_MAX_TIME) {
           this.reset();
         }
-      } else if(currentScene == SCENES.LOSE || currentScene == SCENES.WIN ) {
-        if (idleTime > 30000) {
+      } else if (currentScene == SCENES.LOSE || currentScene == SCENES.WIN) {
+        if (idleTime > IDLE_MAX_TIME) {
           this.leaderBoard();
         }
       } else {
@@ -45,7 +46,7 @@ class Game extends React.Component {
     }, 1000);
   }
 
-  
+
   componentDidUpdate(prevProps) {
     if (this.props.scene !== prevProps.scene) {
       this.idleTimer.reset();
@@ -65,11 +66,16 @@ class Game extends React.Component {
   };
 
   leaderBoard = () => {
-    this.setState({
-      scene: SCENES.LEADERBOARD,
-      playerName: "",
-      sessionId: null,
-      loading: false
+    this.setState({ loading: true }, () => {
+      this.props.api.getLeaderboard().then(({ leaderBoard }) => {
+        this.setState({
+          leaderBoard,
+          scene: SCENES.LEADERBOARD,
+          playerName: "",
+          sessionId: null,
+          loading: false,
+        });
+      });
     });
     this.idleTimer.reset();
   };
@@ -123,8 +129,13 @@ class Game extends React.Component {
   }
 
   onLoseSceneAnyKeyPress = () => {
-    this.setState({ scene: SCENES.LEADERBOARD, loading: false });
+    this.leaderBoard();
   }
+
+  onLeaderboardSceneAnyKeyPress = () => {
+    this.reset();
+  }
+
 
   render() {
     return (
@@ -188,7 +199,10 @@ class Game extends React.Component {
 
 
           {this.state.scene === SCENES.LEADERBOARD && (
-            <LeaderBoard/>
+            <LeaderBoard
+              leaderBoard={this.state.leaderBoard}
+              onAnyKeyPressed={this.onLeaderboardSceneAnyKeyPress}
+            />
           )}
 
           {this.state.loading && <Loading />}

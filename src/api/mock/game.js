@@ -33,23 +33,26 @@ const questionsMock = [
   }
 ];
 
-const leaderboard = {
-  0: {
+const leaderBoard = [
+  {
+    playerId: "3211",
     playerName: "Staszek",
-    result: 123.43,
+    result: 12343,
     answered: 15
   },
-  1: {
+  {
+    playerId: "3211",
     playerName: "Zdzisiek",
-    result: 43.12,
+    result: 4312,
     answered: 3
   },
-  2: {
+  {
+    playerId: "3211",
     playerName: "stefan",
-    result: 331.23,
+    result: 33123,
     answered: 54
   }
-};
+];
 
 const questionsLeftInSession = {};
 
@@ -106,9 +109,9 @@ export const saveLoseGame = ({ sessionId, score }) =>
     }, 500);
   });
 
-export const getLeaderboard = ({ sessionId }) =>
+export const getLeaderboard = () =>
   new Promise(resolve => {
     setTimeout(() => {
-      resolve(leaderboard);
+      resolve({ leaderBoard: leaderBoard });
     }, 500);
   });
