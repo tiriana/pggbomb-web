@@ -1,9 +1,11 @@
 import { Howl, Howler } from "howler";
 import hackingTime from "../../resources/audio/Lost_Years_-_West_Side_Lane_(Mega_Drive-Genesis_Arrange).mp3";
 import machineSounds from "../../resources/audio/Start_IDLEscreenBackground.mp3";
+import timeEndExplosion from "../../resources/audio/TimeEnd_explosion.mp3";
 
 export const playHackingTime = () => play(hackingTime);
 export const playMachineSound = () => play(machineSounds);
+export const playTimeEndExplosionSound = () => playOnce(timeEndExplosion);
 
 const howls = {};
 const getHowl = base64 => {
@@ -21,6 +23,7 @@ const getHowl = base64 => {
 //preload
 getHowl(hackingTime);
 getHowl(machineSounds);
+getHowl(timeEndExplosion);
 
 let nowPlaying;
 
@@ -33,7 +36,20 @@ const play = base64 => {
   }
   getHowl(base64).play();
 
-  console.log("odtwarzam muzykę");
+  nowPlaying = base64;
+};
+
+const playOnce = base64 => {
+  if (nowPlaying === base64) {
+    return;
+  }
+  if (nowPlaying) {
+    getHowl(nowPlaying).stop();
+  }
+  getHowl(base64).once('load', function(){
+    getHowl(base64).play();
+  });
+
 
   nowPlaying = base64;
 };

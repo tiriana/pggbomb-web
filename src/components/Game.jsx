@@ -10,35 +10,49 @@ import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 import Lose from "./scenes/Lose";
 import Idle from "./scenes/Idle";
+import LeaderBoard from "./scenes/LeaderBoard";
 
-const SESSION_TIME = 60000;
+const SESSION_TIME = 10000;
 
 class Game extends React.Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      scene: SCENES.IDLE,
+      scene: SCENES.LOSE,
       playerName: "",
       sessionId: null,
       loading: false
     };
 
-    this.idleTimer = null
+    this.idleTimer = null;
   }
 
   componentDidMount() {
     setInterval(() => {
       var currentScene = this.state.scene;
       var idleTime = this.idleTimer.getElapsedTime();
-      if (currentScene == SCENES.MENU || currentScene == SCENES.LOSE || currentScene == SCENES.WIN || currentScene == SCENES.LEADERBOARD) {
+      if (currentScene == SCENES.MENU || currentScene == SCENES.LEADERBOARD) {
         if (idleTime > 30000) {
           this.reset();
         }
+      } else if(currentScene == SCENES.LOSE || currentScene == SCENES.WIN ) {
+        if (idleTime > 30000) {
+          this.leaderBoard();
+        }
       } else {
-        var idleTime = this.idleTimer.reset();
+        this.idleTimer.reset();
       }
     }, 1000);
   }
+
+  
+  componentDidUpdate(prevProps) {
+    if (this.props.scene !== prevProps.scene) {
+      this.idleTimer.reset();
+    }
+  }
+
+
 
   reset = () => {
     this.setState({
@@ -47,6 +61,17 @@ class Game extends React.Component {
       sessionId: null,
       loading: false
     });
+    this.idleTimer.reset();
+  };
+
+  leaderBoard = () => {
+    this.setState({
+      scene: SCENES.LEADERBOARD,
+      playerName: "",
+      sessionId: null,
+      loading: false
+    });
+    this.idleTimer.reset();
   };
 
   onNameEntered = playerName => {
@@ -79,9 +104,7 @@ class Game extends React.Component {
       this.props.api
         .saveLoseGame({ sessionId: this.state.sessionId, score })
         .then(() => {
-          this.setState({ scene: SCENES.LOSE, loading: false });
-          setTimeout(() => this.setState({ loading: true }), 1000);
-          setTimeout(() => this.reset(), 2000);
+          this.leaderBoard();
         });
     });
   };
@@ -97,6 +120,10 @@ class Game extends React.Component {
         }, 500);
       })
     });
+  }
+
+  onLoseSceneAnyKeyPress = () => {
+    this.setState({ scene: SCENES.LEADERBOARD, loading: false });
   }
 
   render() {
@@ -117,8 +144,10 @@ class Game extends React.Component {
 
           {this.state.scene === SCENES.LOSE && (
             <Lose
-              sessionId={this.state.sessionId}
+              playerId={this.state.sessionId}
               playerName={this.state.playerName}
+              points={this.state.score}
+              onAnyKeyPressed={this.onLoseSceneAnyKeyPress}
             />
           )}
 
@@ -155,6 +184,11 @@ class Game extends React.Component {
 
           {this.state.scene === SCENES.IDLE && (
             <Idle onEnterPress={this.onEnterPress} />
+          )}
+
+
+          {this.state.scene === SCENES.LEADERBOARD && (
+            <LeaderBoard/>
           )}
 
           {this.state.loading && <Loading />}

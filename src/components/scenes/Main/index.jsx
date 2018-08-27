@@ -189,7 +189,7 @@ class Main extends React.Component {
               <Clock timeLeftMS={this.state.timeLeft} />
               {this.renderTimeDiffNotifications()}
             </div>
-            <div className={styles.points}>Punkty: 1265</div>
+            <div className={styles.points + ' regular-text'}>Punkty: 1265</div>
 
             <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
             <div className={styles.questionContent}> {this.state.questionText} </div>
