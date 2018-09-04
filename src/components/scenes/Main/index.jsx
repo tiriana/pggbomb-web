@@ -16,9 +16,6 @@ import {
 } from "../../lib/sounds";
 
 const MAX_WRONG_LETTERS = 3;
-const TIME_DIFF_FOR_CORRECT_ANSWER = 5;
-const TIMES_DIFF_FOR_WRONG_LETTER = -2;
-const TIMES_DIFF_FOR_SKIP_QUESTION = -5;
 
 
 class Main extends React.Component {
@@ -36,6 +33,9 @@ class Main extends React.Component {
       correctAnswer: null,
       wrongLettersGiven: 0,
       timeLeft: this.props.time,
+      correctAnswerReward: this.props.correctAnswerReward,
+      wrongAnswerPenalty: -this.props.wrongAnswerPenalty,
+      skipQuestionPenalty: -this.props.skipQuestionPenalty,
       timeDiffs: {}
     };
 
@@ -67,7 +67,9 @@ class Main extends React.Component {
   };
 
   onWrongLetter = () => {
-    this.changeTimeLeft(TIMES_DIFF_FOR_WRONG_LETTER);
+    this.changeTimeLeft(this.state.wrongAnswerPenalty).then(() => {
+      this.props.onWrongAnswer(this.state.questionId);
+    });
   };
 
   changeTimeLeft = diff => {
@@ -116,8 +118,8 @@ class Main extends React.Component {
       loading: true,
       correctAnswerAnimation: true
     }, () => {
-      this.props.onCorrectAnswer().then(() => {
-        this.changeTimeLeft(TIME_DIFF_FOR_CORRECT_ANSWER);
+      this.props.onCorrectAnswer(this.state.questionId).then(() => {
+        this.changeTimeLeft(this.state.correctAnswerReward);
         setTimeout(() => this.loadQuestion(), 1000);
       });
     })
@@ -138,9 +140,12 @@ class Main extends React.Component {
   };
 
   skipQuestion = () => {
-    playSkippedQuestionSound();
-    this.changeTimeLeft(TIMES_DIFF_FOR_SKIP_QUESTION);
-    this.loadQuestion();
+    this.timer.stop();
+    this.props.onSkipAnswer(this.state.questionId).then(() => {
+      playSkippedQuestionSound();
+      this.changeTimeLeft(this.state.skipQuestionPenalty);
+      this.loadQuestion();
+    });
   };
 
   loadQuestion() {
@@ -152,10 +157,6 @@ class Main extends React.Component {
       () => {
         this.timer.stop();
         this.props.questionGetter().then(({ id, question, answer } = {}) => {
-          if (!id) {
-            return this.onNoMoreQuestions();
-          }
-
           this.timer.start();
 
           return this.setState({
@@ -165,7 +166,15 @@ class Main extends React.Component {
             wrongLettersGiven: 0,
             loading: false
           });
-        });
+        })
+          .catch(error => {
+            if (error.response.status === 400) {
+              var data = error.response.data;
+              if (data.errorCode === 3) {
+                return this.onNoMoreQuestions();
+              }
+            }
+          });
       }
     );
   }

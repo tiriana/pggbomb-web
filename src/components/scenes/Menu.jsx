@@ -11,9 +11,18 @@ const description = {
   fontSize: '37px'
 }
 
+const error = {
+  color: '#ff2a2a',
+  textShadow: '0rem 0.2rem 1rem #ff4a15',
+  fontSize: '49px'
+}
+
 class Menu extends React.Component {
   componentWillMount() {
     playMachineSound();
+    this.setState({
+      errorDesc: ""
+    })
   }
 
   render() {
@@ -27,6 +36,11 @@ class Menu extends React.Component {
         <div style={description}>
           Podaj swoje imię: <NameInput onEnter={onNameEntered} />
         </div>
+        {this.props.errorDesc.length > 0 &&
+          <div style={error}>
+            {this.props.errorDesc}
+          </div>
+        }
       </React.Fragment>
     );
   }

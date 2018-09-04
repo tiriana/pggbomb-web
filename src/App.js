@@ -1,7 +1,8 @@
 import React from "react";
 import Game from "./components/Game";
 import CRT from "./components/CRT";
-import * as api from "./api/mock/game";
+// import * as api from "./api/mock/game";
+import * as api from "./api/game";
 import { hot } from "react-hot-loader";
 
 console.log(api);
