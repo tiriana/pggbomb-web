@@ -24,6 +24,7 @@ class Game extends React.Component {
       loading: false,
       leaderBoard: [],
       errorMessage: "",
+      score: 0,
       sessionTime: SESSION_TIME,
       idleMaxTime: IDLE_MAX_TIME
     };
@@ -106,7 +107,7 @@ class Game extends React.Component {
             });
           }
           throw error;
-        });;
+        });
     });
   };
 
@@ -114,8 +115,8 @@ class Game extends React.Component {
     this.setState({ loading: true }, () => {
       this.props.api
         .saveWinGame({ sessionId: this.state.sessionId, score })
-        .then(() => {
-          this.setState({ scene: SCENES.WIN, loading: false });
+        .then(({totalScore}) => {
+          this.setState({ scene: SCENES.WIN, loading: false, score: totalScore  });
           setTimeout(() => this.setState({ loading: true }), 1000);
           setTimeout(() => this.reset(), 2000);
         });
@@ -126,8 +127,8 @@ class Game extends React.Component {
     this.setState({ loading: true }, () => {
       this.props.api
         .saveLoseGame({ sessionId: this.state.sessionId, score })
-        .then(() => {
-          this.setState({ scene: SCENES.LOSE, loading: false });
+        .then(({totalScore}) => {
+          this.setState({ scene: SCENES.LOSE, loading: false, score: totalScore });
         });
     });
   };

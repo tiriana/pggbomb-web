@@ -8,7 +8,7 @@ export const playMachineSound = () => play(machineSounds);
 export const playTimeEndExplosionSound = () => playOnce(timeEndExplosion);
 
 const howls = {};
-const getHowl = (base64, loop:true) => {
+const getHowl = (base64, loop = true) => {
   if (!howls[base64]) {
     howls[base64] = new Howl({
       src: `data:audio/mp3;base64,${base64}`,

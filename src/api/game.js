@@ -4,60 +4,6 @@ let quizUrl;
 let quizGameId;
 let quizGameUrl;
 
-const questionsMock = [
-  {
-    id: 1,
-    question: "Słownie 1 + 1",
-    answer: "DWA"
-  },
-  {
-    id: 2,
-    question: "Słownie 1 + 2",
-    answer: "TRZY"
-  },
-  {
-    id: 3,
-    question: "Dwa wyrazy",
-    answer: "Dwa wyrazy"
-  },
-  {
-    id: 4,
-    question: "Wpisz aż pięć wyrazów",
-    answer: "Wpisz aż pięć wyrazów"
-  },
-  {
-    id: 5,
-    question: "Twoja stara je",
-    answer: "Banana"
-  },
-  {
-    id: 6,
-    question: "Najdłuższe polskie słowo",
-    answer: "Nie znam"
-  }
-];
-
-const leaderBoard = [
-  {
-    playerId: "3211",
-    playerName: "Staszek",
-    result: 12343,
-    answered: 15
-  },
-  {
-    playerId: "3211",
-    playerName: "Zdzisiek",
-    result: 4312,
-    answered: 3
-  },
-  {
-    playerId: "3211",
-    playerName: "stefan",
-    result: 33123,
-    answered: 54
-  }
-];
-
 const questionsLeftInSession = {};
 
 const api = axios.create({
@@ -113,7 +59,10 @@ export const getNextQuestion = ({ sessionId }) => {
 export const saveGoodAnswer = ({ sessionId, questionId }) => {
   return api.get(questionId + "?akcja=markAsCompleted")
     .then(result => {
-      return;
+      return {
+        timeShift: result.data.timeShift,
+        totalScore: result.data.totalScore
+      };
     }).catch(error => {
       console.log(error);
       throw error;
@@ -133,7 +82,10 @@ export const saveBadAnswer = ({ sessionId, questionId }) => {
 export const skipQuestion = ({ sessionId, questionId }) => {
   return api.get(questionId + "?akcja=markAsSkipped")
     .then(result => {
-      return;
+      return {
+        timeShift: result.data.timeShift,
+        totalScore: result.data.totalScore
+      };
     }).catch(error => {
       console.log(error);
       throw error;
@@ -142,7 +94,9 @@ export const skipQuestion = ({ sessionId, questionId }) => {
 export const saveWinGame = ({ sessionId, score }) => {
   return api.get(sessionId + "?akcja=finishGame")
     .then(result => {
-      return;
+      return {
+        totalScore: result.totalScore
+      }
     }).catch(error => {
       console.log(error);
       throw error;
@@ -152,16 +106,31 @@ export const saveWinGame = ({ sessionId, score }) => {
 export const saveLoseGame = ({ sessionId, score }) => {
   return api.get(sessionId + "?akcja=finishGame")
     .then(result => {
-      return;
+      return {
+        totalScore: result.data.totalScore
+      }
     }).catch(error => {
       console.log(error);
       throw error;
     });
 };
 
-export const getLeaderboard = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve({ leaderBoard: leaderBoard });
-    }, 500);
-  });
+export const getLeaderboard = (limit = 17) => {
+  return api.get(quizUrl + "?akcja=getLeaderboard&limit=" + limit)
+    .then(result => {
+      var leaderBoardMapped = result.data.leaderboard.map((score) => {
+        return {
+          playerId: score.quizGameId,
+          playerName: score.playerName,
+          result: score.score,
+          answered: 0
+        }
+      });
+      return {
+        leaderBoard: leaderBoardMapped
+      };
+    }).catch(error => {
+      console.log(error);
+      throw error;
+    });
+};

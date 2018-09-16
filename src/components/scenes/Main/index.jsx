@@ -36,7 +36,8 @@ class Main extends React.Component {
       correctAnswerReward: this.props.correctAnswerReward,
       wrongAnswerPenalty: -this.props.wrongAnswerPenalty,
       skipQuestionPenalty: -this.props.skipQuestionPenalty,
-      timeDiffs: {}
+      timeDiffs: {},
+      score: 0
     };
 
     this.timer = new BombTimer({ time: this.props.time });
@@ -118,9 +119,9 @@ class Main extends React.Component {
       loading: true,
       correctAnswerAnimation: true
     }, () => {
-      this.props.onCorrectAnswer(this.state.questionId).then(() => {
-        this.changeTimeLeft(this.state.correctAnswerReward);
-        setTimeout(() => this.loadQuestion(), 1000);
+      this.props.onCorrectAnswer(this.state.questionId).then(({ timeShift, totalScore }) => {
+        this.changeTimeLeft(timeShift);
+        setTimeout(() => this.loadQuestion(totalScore), 1000);
       });
     })
   };
@@ -141,14 +142,14 @@ class Main extends React.Component {
 
   skipQuestion = () => {
     this.timer.stop();
-    this.props.onSkipAnswer(this.state.questionId).then(() => {
+    this.props.onSkipAnswer(this.state.questionId).then(({ timeShift, totalScore }) => {
       playSkippedQuestionSound();
-      this.changeTimeLeft(this.state.skipQuestionPenalty);
-      this.loadQuestion();
+      this.changeTimeLeft(timeShift);
+      this.loadQuestion(totalScore);
     });
   };
 
-  loadQuestion() {
+  loadQuestion(totalScore = 0) {
     this.setState(
       {
         loading: true,
@@ -164,7 +165,8 @@ class Main extends React.Component {
             questionText: question,
             correctAnswer: answer,
             wrongLettersGiven: 0,
-            loading: false
+            loading: false,
+            score: totalScore
           });
         })
           .catch(error => {
@@ -205,7 +207,7 @@ class Main extends React.Component {
               <Clock timeLeftMS={this.state.timeLeft} />
               {this.renderTimeDiffNotifications()}
             </div>
-            <div className={styles.points + ' regular-text'}>Punkty: 1265</div>
+            <div className={styles.points + ' regular-text'}>Punkty: { this.state.score }</div>
 
             <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
             <div className={styles.questionContent}> {this.state.questionText} </div>

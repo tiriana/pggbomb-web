@@ -9,7 +9,7 @@ class Lose extends React.Component {
   skipSceneDisabled = true;
   onAnyKeyPressed = null;
 
-  constructor(...args){
+  constructor(...args) {
     super(...args);
   }
 
@@ -23,9 +23,14 @@ class Lose extends React.Component {
   }
 
   callback = (e) => {
-    if(!this.skipSceneDisabled){
+    if (!this.skipSceneDisabled) {
       this.props.onAnyKeyPressed();
     }
+  }
+
+  getPlayerId() {
+    const re = /(?!.*\/)(.*)$/;
+    return re.exec(this.props.playerId);
   }
 
   render() {
@@ -34,10 +39,10 @@ class Lose extends React.Component {
         <div className='regular-text'>
           <div>KONIEC CZASU</div>
           <div>Twój wynik: {this.props.points}</div>
-          <div><span>Gracz: {this.props.playerName}</span><span> ID: {this.props.playerId}</span></div>
+          <div><span>Gracz: {this.props.playerName}</span><span> ID: {this.getPlayerId()}</span></div>
           <div>Odbierz wydruk z wynikiem</div>
           <img src={explosionImage} alt="Explosion" />
-          <OnKeydown callback={this.callback}/>
+          <OnKeydown callback={this.callback} />
         </div>
       </React.Fragment>
     );

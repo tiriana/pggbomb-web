@@ -77,6 +77,7 @@ class BombTimer {
     if (this._stopwatch.ms + timeDiffMS <= 0) {
       this.stop();
       this._stopwatch.emit('done');
+      this._stopwatch.doneFired = true;
     } else {
       this._stopwatch.reset(this._stopwatch.ms + timeDiffMS);
     }
