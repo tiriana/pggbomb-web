@@ -23,7 +23,7 @@ const getHowl = (base64, loop = true) => {
 //preload
 getHowl(hackingTime);
 getHowl(machineSounds);
-getHowl(timeEndExplosion);
+getHowl(timeEndExplosion, false);
 
 let nowPlaying;
 

@@ -117,8 +117,6 @@ class Game extends React.Component {
         .saveWinGame({ sessionId: this.state.sessionId, score })
         .then(({totalScore}) => {
           this.setState({ scene: SCENES.WIN, loading: false, score: totalScore  });
-          setTimeout(() => this.setState({ loading: true }), 1000);
-          setTimeout(() => this.reset(), 2000);
         });
     });
   };
@@ -150,6 +148,10 @@ class Game extends React.Component {
     this.leaderBoard();
   }
 
+  onWinSceneAnyKeyPress = () => {
+    this.leaderBoard();
+  }
+
   onLeaderboardSceneAnyKeyPress = () => {
     this.reset();
   }
@@ -166,8 +168,10 @@ class Game extends React.Component {
         <React.Fragment>
           {this.state.scene === SCENES.WIN && (
             <Win
-              sessionId={this.state.sessionId}
-              playerName={this.state.playerName}
+            playerId={this.state.sessionId}
+            playerName={this.state.playerName}
+            points={this.state.score}
+            onAnyKeyPressed={this.onWinSceneAnyKeyPress}
             />
           )}
 

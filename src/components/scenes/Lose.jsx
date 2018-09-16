@@ -4,6 +4,18 @@ import OnKeydown from "../KeyboardListener/OnKeydown";
 
 const explosionImage = require('../../resources/img/end_explosion.png');
 
+
+var titleStyle = {
+  fontSize: '5rem',
+  marginBotton: '1rem',
+  marginTop: '-1rem',
+}
+
+var imgStyle = {
+  height: '35rem',
+  marginTop: '2rem'
+}
+
 class Lose extends React.Component {
 
   skipSceneDisabled = true;
@@ -30,18 +42,18 @@ class Lose extends React.Component {
 
   getPlayerId() {
     const re = /(?!.*\/)(.*)$/;
-    return re.exec(this.props.playerId);
+    return re.exec(this.props.playerId)[0];
   }
 
   render() {
     return (
       <React.Fragment>
         <div className='regular-text'>
-          <div>KONIEC CZASU</div>
+          <div style={titleStyle}>KONIEC CZASU</div>
           <div>Twój wynik: {this.props.points}</div>
           <div><span>Gracz: {this.props.playerName}</span><span> ID: {this.getPlayerId()}</span></div>
           <div>Odbierz wydruk z wynikiem</div>
-          <img src={explosionImage} alt="Explosion" />
+          <img style={imgStyle} src={explosionImage} alt="Explosion" />
           <OnKeydown callback={this.callback} />
         </div>
       </React.Fragment>

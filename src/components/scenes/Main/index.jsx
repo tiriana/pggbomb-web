@@ -67,12 +67,6 @@ class Main extends React.Component {
     this.setState({ timeLeft: this.timer.ms });
   };
 
-  onWrongLetter = () => {
-    this.changeTimeLeft(this.state.wrongAnswerPenalty).then(() => {
-      this.props.onWrongAnswer(this.state.questionId);
-    });
-  };
-
   changeTimeLeft = diff => {
     this.indicateTimeDiff(diff);
     this.setState(({ timeLeft: prev }) => {
@@ -81,6 +75,12 @@ class Main extends React.Component {
       return ({ timeLeft: time > 0 ? time : 0 });
     });
     this.timer.changeTime(diff * 1000);
+  };
+
+  onWrongLetter = () => {
+    var self = this;
+    this.changeTimeLeft(this.state.wrongAnswerPenalty);
+    this.props.onWrongAnswer(this.state.questionId);
   };
 
   indicateTimeDiff = diff => {
@@ -207,7 +207,7 @@ class Main extends React.Component {
               <Clock timeLeftMS={this.state.timeLeft} />
               {this.renderTimeDiffNotifications()}
             </div>
-            <div className={styles.points + ' regular-text'}>Punkty: { this.state.score }</div>
+            <div className={styles.points + ' regular-text'}>Punkty: {this.state.score}</div>
 
             <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
             <div className={styles.questionContent}> {this.state.questionText} </div>
