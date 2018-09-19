@@ -48,7 +48,8 @@ export const getNextQuestion = ({ sessionId }) => {
       return {
         id: question.quizGameQuestionUrl,
         question: question.question,
-        answer: question.answer
+        answer: question.answer,
+        category: question.category
       }
     }).catch(error => {
       console.log(error);
@@ -95,7 +96,7 @@ export const saveWinGame = ({ sessionId, score }) => {
   return api.get(sessionId + "?akcja=finishGame")
     .then(result => {
       return {
-        totalScore: result.totalScore
+        totalScore: result.data.totalScore
       }
     }).catch(error => {
       console.log(error);
