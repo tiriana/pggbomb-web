@@ -69,6 +69,12 @@ module.exports = {
       {
         test: /\.(png|jp(e*)g|svg)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.(ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ]
   },

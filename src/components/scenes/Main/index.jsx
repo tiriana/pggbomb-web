@@ -157,12 +157,13 @@ class Main extends React.Component {
       },
       () => {
         this.timer.stop();
-        this.props.questionGetter().then(({ id, question, answer } = {}) => {
+        this.props.questionGetter().then(({ id, question, answer, category } = {}) => {
           this.timer.start();
 
           return this.setState({
             questionId: id,
             questionText: question,
+            categoryName: category,
             correctAnswer: answer,
             wrongLettersGiven: 0,
             loading: false,
@@ -209,7 +210,7 @@ class Main extends React.Component {
             </div>
             <div className={styles.points + ' regular-text'}>Punkty: {this.state.score}</div>
 
-            <p className={styles.categoryName}>KATEGORIA: TYTUŁY GIER</p>
+            <p className={styles.categoryName}>KATEGORIA: {this.state.categoryName}</p>
             <div className={styles.questionContent}> {this.state.questionText} </div>
             <AnswerTiles
               key={`answer_${this.state.questionId}`}

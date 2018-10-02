@@ -25,16 +25,15 @@ class Menu extends React.Component {
     })
   }
 
-  render() {
-    const { onNameEntered } = this.props;
 
+  render() {
     return (
       <React.Fragment>
         <h1 style={header}>LOADING PROGRAM: PGG BOMB</h1>
         <p style={description}>Witaj podróżniku. Zagrajmy w grę...</p>
 
         <div style={description}>
-          Podaj swoje imię: <NameInput onEnter={onNameEntered} />
+          Podaj swoje imię: <NameInput onEnter={this.props.onNameEntered}  onEscapePress={this.props.onEscapePress}/>
         </div>
         {this.props.errorDesc.length > 0 &&
           <div style={error}>

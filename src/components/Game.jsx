@@ -131,12 +131,48 @@ class Game extends React.Component {
     });
   };
 
+  onIdleEnterOrSpacePress = (button) => {
+    if(button === 'space'){
+        this.leaderBoard();
+    }
+
+    if(button === 'enter') {
+      this.onEnterPress();
+    }
+  }
+
   onEnterPress = () => {
     this.setState({ loading: true }, () => {
       new Promise(resolve => {
         setTimeout(() => {
           this.setState({
             scene: SCENES.MENU,
+            loading: false
+          });
+        }, 500);
+      })
+    });
+  }
+
+  onEscapePress = () => {
+    this.setState({ loading: true }, () => {
+      new Promise(resolve => {
+        setTimeout(() => {
+          this.setState({
+            scene: SCENES.IDLE,
+            loading: false
+          });
+        }, 500);
+      })
+    });
+  }
+
+  onSpacePress = () => {
+    this.setState({ loading: true }, () => {
+      new Promise(resolve => {
+        setTimeout(() => {
+          this.setState({
+            scene: SCENES.LEADERBOARD,
             loading: false
           });
         }, 500);
@@ -187,6 +223,7 @@ class Game extends React.Component {
           {this.state.scene === SCENES.MENU && (
             <Menu
               onNameEntered={this.onNameEntered}
+              onEscapePress={this.onEscapePress}
               errorDesc={this.state.errorMessage} />
           )}
 
@@ -227,7 +264,7 @@ class Game extends React.Component {
           )}
 
           {this.state.scene === SCENES.IDLE && (
-            <Idle onEnterPress={this.onEnterPress} />
+            <Idle onEnterOrSpacePress={this.onIdleEnterOrSpacePress} />
           )}
 
 

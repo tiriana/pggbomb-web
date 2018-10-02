@@ -33,10 +33,18 @@ class NameInput extends React.Component {
       }));
     }
 
+    if (keycode(e.keyCode) === "esc") {
+      playTypingSound();
+      this.props.onEscapePress();
+    }
+
     let char = keycode(e.keyCode);
     if (keycode(e.keyCode) === "space") {
       char = " ";
     }
+
+
+
     if (/[ 0-9a-z]/.test(char) && char.length === 1) {
       playTypingSound();
       return this.setState(state => ({

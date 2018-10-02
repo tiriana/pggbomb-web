@@ -1,5 +1,5 @@
 import React from "react";
-import OneKeyInput from "../OneKeyInput";
+import MultiKeyInput from "../MultiKeyInput";
 import { playMachineSound } from "../lib/music";
 
 const logo = require('../../resources/img/pggbomb_logo.png');
@@ -15,14 +15,14 @@ class Idle extends React.Component {
   }
 
   render() {
-    const { onEnterPress } = this.props;
+    const { onEnterOrSpacePress } = this.props;
 
     return (
       <React.Fragment>
         <img src={logo} alt='Logo' />
 
         <div style={description}>
-          NACIŚNIJ ENTER ABY ROZPOCZĄĆ<OneKeyInput requiredKeyCode='ENTER' onRequiredKeyPress={onEnterPress} />
+          NACIŚNIJ ENTER ABY ROZPOCZĄĆ<MultiKeyInput requiredKeyCodes={['enter', 'space']} onRequiredKeyPress={onEnterOrSpacePress} />
         </div>
       </React.Fragment>
     );
