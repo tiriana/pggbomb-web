@@ -22,7 +22,7 @@ class NameInput extends React.Component {
   }
 
   onKeyPressed = (e) => {
-    if (keycode("Enter") === e.keyCode) {
+    if (keycode("enter") === e.keyCode) {
       this.props.onEnter(this.state.name);
       playTypingSound();
     }
@@ -59,6 +59,7 @@ class NameInput extends React.Component {
         { this.state.name }
         <Cursor />
       </span>
+      
     );
   }
 }
