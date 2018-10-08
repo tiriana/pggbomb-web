@@ -15,11 +15,6 @@ import LeaderBoard from "./scenes/LeaderBoard";
 const SESSION_TIME = 30000;
 const IDLE_MAX_TIME = 30 * 1000;
 
-const inputBackspaceNavigationPreventer = {
-  display: 'none'
-}
-
-
 class Game extends React.Component {
   constructor(...args) {
     super(...args);
@@ -283,7 +278,6 @@ class Game extends React.Component {
 
           {this.state.loading && <Loading />}
         </React.Fragment>
-        <input style={inputBackspaceNavigationPreventer}/>
       </IdleTimer>
     );
   }
