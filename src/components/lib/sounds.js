@@ -15,7 +15,7 @@ const howls = {};
 const getHowl = base64 => {
   if (!howls[base64]) {
     howls[base64] = new Howl({
-      src: `data:audio/mp3;base64,${base64}`,
+      src: [base64, `data:audio/mp3;base64,${base64}`],
       loop: false,
       preload: true
     });

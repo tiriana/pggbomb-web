@@ -16,6 +16,8 @@
 
 @console-color: #14fdce;
 @console-bg: #031e11;
+@console-bg-warning: #753200;
+@console-bg-danger: #740003;
 
 // global settings
 
@@ -30,6 +32,10 @@ body {
   font-size: 24px;
   -webkit-font-smoothing: none;
   line-height: 1.2;
+}
+
+body.warning {
+
 }
 
 h1 {
@@ -133,7 +139,18 @@ a:hover {
   padding: 3rem 2rem;
   pointer-events: auto;
   text-shadow: 0rem 0.2rem 1rem lighten(@console-bg,20%);
-  z-index: -1
+  z-index: -1;
+  transition: background, 2s, text-shadow, 2s;
+}
+
+.warning {
+  background-color: @console-bg-warning;
+  text-shadow: 0rem 0.2rem 1rem lighten(@console-bg-warning,20%);
+}
+
+.danger {
+  background-color: @console-bg-danger;
+  text-shadow: 0rem 0.2rem 1rem lighten(@console-bg-danger,20%);
 }
 
 @keyframes crt-output {

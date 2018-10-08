@@ -10,7 +10,9 @@ import Main from "./scenes/Main";
 import Win from "./scenes/Win";
 import Lose from "./scenes/Lose";
 import Idle from "./scenes/Idle";
-import LeaderBoard from "./scenes/LeaderBoard";
+import LeaderBoard from "./scenes/Leaderboard";
+
+import backgroundListener from "./CRT/backgroundListener";
 
 const SESSION_TIME = 30000;
 const IDLE_MAX_TIME = 30 * 1000;
@@ -55,6 +57,7 @@ class Game extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.scene !== prevProps.scene) {
       this.idleTimer.reset();
+      backgroundListener.setNormal();
     }
   }
 

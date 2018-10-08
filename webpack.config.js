@@ -1,4 +1,3 @@
-
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
@@ -34,19 +33,13 @@ module.exports = {
       {
         test: /^http/,
         use: {
-          loader: "url-loader",
-          options: {
-            limit: 50000
-          }
+          loader: "url-loader"
         }
       },
       {
         test: /\.woff2$/,
         use: {
-          loader: "url-loader",
-          options: {
-            limit: 50000
-          }
+          loader: "url-loader"
         }
       },
       {
@@ -60,20 +53,17 @@ module.exports = {
       {
         test: /\.mp3$/,
         use: {
-          loader: "base64-loader",
-          options: {
-            name: '[name]_[hash].[ext]',
-          }
+          loader: "url-loader"
         }
       },
       {
         test: /\.(png|jp(e*)g|svg)$/,
-        loader: 'file-loader'
+        loader: "url-loader"
       },
       {
         test: /\.(ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'file-loader'
+          loader: "url-loader"
         }
       }
     ]
@@ -89,7 +79,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/dist",
-    publicPath: '/',
+    publicPath: "/",
     filename: "bundle.js"
   }
 };

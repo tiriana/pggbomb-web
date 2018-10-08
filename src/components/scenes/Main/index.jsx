@@ -4,6 +4,8 @@ import Loading from "../../Loading";
 import AnswerTiles from "./AnswerTiles";
 import OnEnter from "../../KeyboardListener/OnEnter";
 
+import backgroundListener from "../../CRT/backgroundListener";
+
 import Clock from "../../Clock";
 import BombTimer from "../../lib/BombTimer";
 import styles from "./mainScene.scss";
@@ -55,6 +57,7 @@ class Main extends React.Component {
   componentWillUnmount() {
     this.timer.unbindTick();
     clearInterval(this.tickingSound);
+    backgroundListener.setNormal();
   }
 
   componentDidMount() {
@@ -65,6 +68,15 @@ class Main extends React.Component {
 
   tick = () => {
     this.setState({ timeLeft: this.timer.ms });
+
+    if (this.timer.ms > 30 * 1000) {
+      backgroundListener.setNormal();
+    } else if (this.timer.ms > 10 * 1000) {
+        backgroundListener.setWarning();
+    } else {
+      backgroundListener.setDanger();
+    }
+
   };
 
   changeTimeLeft = diff => {

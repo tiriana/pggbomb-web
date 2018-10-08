@@ -5,8 +5,6 @@ import CRT from "./components/CRT";
 import * as api from "./api/game";
 import { hot } from "react-hot-loader";
 
-console.log(api);
-
 const App = () => (
   <CRT>
     <Game api={api} />
