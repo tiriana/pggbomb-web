@@ -7,10 +7,11 @@ const STATUS = {
 };
 
 class BombTimer {
-  constructor({ time, tickMS = 1000 / 20, almostDoneMS = 10000 }) {
+  constructor({ time, tickMS = 1000 / 20, almostDoneMS = 10000, maxTimeLimit }) {
     this.time = time;
     this.tickMS = tickMS;
     this.almostDoneMS = almostDoneMS;
+    this.maxTimeLimit = maxTimeLimit;
 
     console.log({ time, tickMS, almostDoneMS })
 
@@ -72,6 +73,11 @@ class BombTimer {
     if (this.isDone()) {
       return;
     }
+
+    if(this._stopwatch.ms + timeDiffMS >= this.maxTimeLimit){
+      this._stopwatch.reset(this.maxTimeLimit);
+    }
+    
     const isRunning = this.isRunning();
 
     if (this._stopwatch.ms + timeDiffMS <= 0) {

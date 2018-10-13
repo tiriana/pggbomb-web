@@ -39,10 +39,11 @@ class Main extends React.Component {
       wrongAnswerPenalty: -this.props.wrongAnswerPenalty,
       skipQuestionPenalty: -this.props.skipQuestionPenalty,
       timeDiffs: {},
+      maxTimeLimit: this.props.maxTimeLimit,
       score: 0
     };
 
-    this.timer = new BombTimer({ time: this.props.time });
+    this.timer = new BombTimer({ time: this.props.time, maxTimeLimit: this.props.maxTimeLimit });
   }
 
   componentWillMount() {

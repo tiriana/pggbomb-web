@@ -90,7 +90,7 @@ class Game extends React.Component {
 
   onNameEntered = playerName => {
     this.setState({ loading: true, errorMessage: "" }, () => {
-      this.props.api.createSession(playerName).then(({ sessionId, timeLimit, correctAnswerTimeReward, wrongAnswerTimePenalty, skipAnswerTimePenalty }) => {
+      this.props.api.createSession(playerName).then(({ sessionId, timeLimit, maxTimeLimit, correctAnswerTimeReward, wrongAnswerTimePenalty, skipAnswerTimePenalty }) => {
         this.setState({
           playerName,
           scene: SCENES.MAIN,
@@ -100,6 +100,7 @@ class Game extends React.Component {
           correctAnswerReward: correctAnswerTimeReward,
           wrongAnswerPenalty: wrongAnswerTimePenalty,
           skipAnswerPenalty: skipAnswerTimePenalty,
+          maxTimeLimit: maxTimeLimit * 1000
         });
       })
         .catch(error => {
@@ -264,6 +265,7 @@ class Game extends React.Component {
               wrongAnswerPenalty={this.state.wrongAnswerPenalty}
               skipQuestionPenalty={this.state.skipAnswerPenalty}
               time={this.state.sessionTime}
+              maxTimeLimit={this.state.maxTimeLimit}
             />
           )}
 
