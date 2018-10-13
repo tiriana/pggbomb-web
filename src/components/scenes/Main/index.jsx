@@ -70,7 +70,7 @@ class Main extends React.Component {
   tick = () => {
     this.setState({ timeLeft: this.timer.ms });
 
-    if (this.timer.ms > 30 * 1000) {
+    if (this.timer.ms > 20 * 1000) {
       backgroundListener.setNormal();
     } else if (this.timer.ms > 10 * 1000) {
         backgroundListener.setWarning();
