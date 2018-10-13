@@ -13,7 +13,7 @@ class BombTimer {
     this.almostDoneMS = almostDoneMS;
     this.maxTimeLimit = maxTimeLimit;
 
-    console.log({ time, tickMS, almostDoneMS })
+    console.log({ time, tickMS, almostDoneMS, maxTimeLimit })
 
     this._createStopwatch(this.time, this.tickMS, this.almostDoneMS);
   }
@@ -76,8 +76,9 @@ class BombTimer {
 
     if(this._stopwatch.ms + timeDiffMS >= this.maxTimeLimit){
       this._stopwatch.reset(this.maxTimeLimit);
+      return;
     }
-    
+
     const isRunning = this.isRunning();
 
     if (this._stopwatch.ms + timeDiffMS <= 0) {
