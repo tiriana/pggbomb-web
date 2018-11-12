@@ -11,7 +11,7 @@ class CRT extends React.Component {
   }
 
   componentDidMount() {
-    backgroundListener.onChanged(this.onBackgroundChanged);
+    // backgroundListener.onChanged(this.onBackgroundChanged);
   }
 
   onBackgroundChanged = outputClass => {
@@ -19,7 +19,7 @@ class CRT extends React.Component {
   }
 
   componentWillUnmount() {
-    backgroundListener.reset();
+    // backgroundListener.reset();
   }
 
   render() {

@@ -19,9 +19,16 @@ api.interceptors.response.use(function (response) {
 });
 
 export const createSession = (playerName) => {
-  return api.get('/rest-api/quizy?akcja=getDefaultQuiz')
-    .then(result => {
-      quizUrl = result.data.defaultQuizUrl;
+  const specificQuiz = new URLSearchParams(window.location.search).get("quiz");
+
+  const quizInfoPromise = specificQuiz ?
+    new Promise(r => r(`/rest-api/quizy/${specificQuiz}`)) :
+    api.get('/rest-api/quizy?akcja=getDefaultQuiz').then(result => result.data.defaultQuizUrl)
+
+  return quizInfoPromise
+    .then(_quizUrl => {
+      quizUrl = _quizUrl;
+
       return api.get(quizUrl + "?akcja=checkPlayerName&playerName=" + playerName)
         .then(result => {
           return api.get(quizUrl + "?akcja=createGame&playerName=" + playerName)

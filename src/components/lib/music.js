@@ -1,8 +1,8 @@
 import { Howl, Howler } from "howler";
-import hackingTime from "../../resources/audio/Lost_Years_-_West_Side_Lane_(Mega_Drive-Genesis_Arrange).mp3";
+// import hackingTime from "../../resources/audio/Lost_Years_-_West_Side_Lane_(Mega_Drive-Genesis_Arrange).mp3";
 import timeEndExplosion from "../../resources/audio/TimeEnd_explosion.mp3";
 
-export const playHackingTime = () => play(hackingTime);
+export const playHackingTime = () => null;
 export const playMachineSound = () => null;
 export const playTimeEndExplosionSound = () => playOnce(timeEndExplosion);
 
@@ -20,7 +20,7 @@ const getHowl = (base64, loop = true) => {
 }
 
 //preload
-getHowl(hackingTime);
+// getHowl(hackingTime);
 getHowl(timeEndExplosion, false);
 
 let nowPlaying;
